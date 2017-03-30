@@ -49,7 +49,8 @@ class ToolProxy < ActiveRecord::Base
         'product_info' => product_info
       },
       'base_url_choice' => base_url_choice,
-      'resource_handler' => resource_handler
+      'resource_handler' => resource_handler,
+      'services_offered' => services_offered
     }
   end
 
@@ -68,14 +69,14 @@ class ToolProxy < ActiveRecord::Base
   def product_info
     {
       'product_name' => {
-        'default_value' => 'lti2_reference_tool_provider'
+        'default_value' => 'similarity detection reference tool'
       },
       'product_version' => '1.0',
       'description' => {
         'default_value' => 'LTI 2.1 tool provider reference implementation'
       },
       'product_family' => {
-        'code' => 'lti2_reference_tool_provider',
+        'code' => 'similarity detection reference tool',
         'vendor' => {
           'code' => 'Instructure.com',
           'vendor_name' => {
@@ -101,21 +102,32 @@ class ToolProxy < ActiveRecord::Base
     }]
   end
 
+  # services_offered
+  #
+  # Returns a list of services offered by the tool provider.
+  def services_offered
+    [{
+        "id": "http://sdrt.Instructure.com#vnd.Canvas.SubmissionEvent",
+        "action": ["POST"],
+        "endpoint": "http://www.sdrt.com/handler"
+    }]
+  end
+
   # resource_handler
   #
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
   def resource_handler
     [{
       'resource_type' => {
-        'code' => 'lti2_reference_tool_provider'
+        'code' => 'similarity detection reference tool'
       },
       'resource_name' => {
-        'default_value' => 'lti2_reference_tool_provider'
+        'default_value' => 'similarity detection reference tool'
       },
       'message' => [{
         'message_type' => 'basic-lti-launch-request',
-        'path' => '/basic-launch',
-        'enabled_capability' => []
+        'path' => '/assignment-configuration',
+        'enabled_capability' => ["Canvas.placements.similarityDetection"]
       }]
     }]
   end
