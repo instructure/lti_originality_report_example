@@ -1,30 +1,66 @@
 module RegistrationHelper
-  REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
+  class ToolConsumerProfileHelper
+    attr_reader :tcp_url, :access_token, :tool_consumer_profile
 
-  def supports_required_capabilities?(tcp)
-    (REQUIRED_CAPABILITIES - tcp['capability_offered']).blank?
-  end
-
-  def registration_failure_redirect
-    redirect_to "#{params[:launch_presentation_return_url]}?status=failure"
-  end
-
-  def tool_consumer_profile(access_token)
-    request =  { headers: { 'Authorization' => "Bearer #{access_token}" } }
-    JSON.parse(HTTParty.get(tcp_url, request))
-  end
-
-  def tcp_url
-    URI.parse(params[:tc_profile_url])
-  end
-
-  def tp_service_url(tcp)
-    tp_services = tcp['service_offered'].find do |s|
-      s['format'] == [ToolProxy::TOOL_PROXY_FORMAT]
+    def initialize(tcp_url, access_token)
+      @tcp_url = tcp_url
+      @access_token = access_token
+      @tool_consumer_profile = fetch_tool_consumer_profile
     end
 
-    # Retrieve and return the endpoint of the ToolProxy.collection service
-    URI.parse(tp_services['endpoint']) unless tp_services.blank?
+    def supports_required_capabilities?
+      (ToolProxy::REQUIRED_CAPABILITIES - tool_consumer_profile.capabilities_offered).blank?
+    end
+
+    def tp_service_url
+      tp_service = tool_consumer_profile.services_offered.find do |s|
+        s.formats == [ToolProxy::TOOL_PROXY_FORMAT]
+      end
+
+      # Retrieve and return the endpoint of the ToolProxy.collection service
+      URI.parse(tp_service.endpoint) unless tp_service.blank?
+    end
+
+    private
+
+    def fetch_tool_consumer_profile
+      request = { headers: { 'Authorization' => "Bearer #{access_token}" } }
+      IMS::LTI::Models::ToolConsumerProfile.from_json(JSON.parse(HTTParty.get(tcp_url, request)))
+    end
+  end
+
+  class ToolProxyResponseHelper
+    attr_reader :tp_response, :redirect_url, :tp_parsed_response
+
+    def initialize(tp_response, redirect_url)
+      @tp_response = tp_response
+      @tp_parsed_response = JSON.parse(tp_response.body)
+      @redirect_url = redirect_url
+    end
+
+    def registration_success_url
+       "#{redirect_url}?tool_proxy_guid=#{tool_proxy_guid}&status=success"
+    end
+
+    def tool_proxy_guid
+      tp_parsed_response['tool_proxy_guid']
+    end
+
+    def tc_half_shared_secret
+      tp_parsed_response['tc_half_shared_secret']
+    end
+
+    def success?
+      tp_response.code == 201
+    end
+  end
+
+  def registration_failure_url
+    "#{registration_redirect_url}?status=failure"
+  end
+
+  def registration_redirect_url
+    params[:launch_presentation_return_url]
   end
 
   def register_tool_proxy(tool_proxy, tp_service_url, access_token)
