@@ -5,7 +5,6 @@ RSpec.describe Registration::ToolConsumerProfile do
   include_context 'lti_spec_helper'
 
   let(:http_party) { class_double(HTTParty).as_stubbed_const }
-  let(:access_token) { 'eya34a34.a4453ad.12323234a' }
   let(:tcp_helper) { Registration::ToolConsumerProfile.new('http://www.tcp.com', access_token) }
 
   before do
@@ -25,8 +24,10 @@ RSpec.describe Registration::ToolConsumerProfile do
     end
 
     it 'returns false if the TCP does not contain all required capabilities' do
+      backup_capabilities = ToolProxy::REQUIRED_CAPABILITIES
       ToolProxy::REQUIRED_CAPABILITIES = ['Capaability.not.Offered']
       expect(tcp_helper.supports_required_capabilities?).to be_falsey
+      ToolProxy::REQUIRED_CAPABILITIES = backup_capabilities
     end
   end
 

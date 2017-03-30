@@ -1,4 +1,26 @@
 RSpec.shared_context 'lti_spec_helper', shared_context: :metadata do
+  let(:registration_message) do
+    {
+      lti_message_type: 'ToolProxyRegistrationRequest',
+      lti_version: 'LTI-2p0',
+      reg_password: 'd731e340-0fed-497a-9f92-6e1f6cf4eb21',
+      tc_profile_url: 'http://canvas.docker/api/lti/courses/2/tool_consumer_profile',
+      launch_presentation_return_url: 'http://canvas.docker/courses/2/lti/registration_return',
+      launch_presentation_document_target: 'iframe',
+      oauth2_access_token_url: 'http://canvas.docker/api/lti/courses/2/authorize',
+    }
+  end
+  let(:access_token) { 'eya34a34.a4453ad.12323234a' }
+  let(:tp_response) do
+    {
+      '@context' => 'http =>//purl.imsglobal.org/ctx/lti/v2/ToolProxyId',
+      '@type' => 'ToolProxy',
+      'tool_proxy_guid' => tool_proxy_guid,
+      'tc_half_shared_secret' => tc_half_shared_secret
+    }.to_json
+  end
+  let(:tool_proxy_guid) { '00d97c7d-f163-44aa-9921-c7c186a5e809' }
+  let(:tc_half_shared_secret) { '0e5de8345149b53c28e49f1da467f077b6ecf8fd1e29cff9d2bea693105ac353e4742b168ca594f2d0346ebc968454ce57f0a84017b6f4b2d279f08797d66928' }
   let(:tool_consumer_profile) do
     '{
        "lti_version":"LTI-2p0",

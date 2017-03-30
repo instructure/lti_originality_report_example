@@ -60,7 +60,12 @@ class ToolProxy < ActiveRecord::Base
   # TODO include the originality report service
   def security_contract
     {
-      tp_half_shared_secret: tp_half_shared_secret
+      tp_half_shared_secret: tp_half_shared_secret,
+      tool_service: [{
+        '@type' => 'RestServiceProfile',
+        'service' => 'vnd.Canvas.webhooksSubscription',
+        'action' => ['POST', 'GET', 'PUT', 'DELETE']
+      }]
     }
   end
 
