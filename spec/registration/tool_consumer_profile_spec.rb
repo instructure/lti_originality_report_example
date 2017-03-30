@@ -31,5 +31,8 @@ RSpec.describe Registration::ToolConsumerProfile do
   end
 
   describe '#tp_service_url' do
-    it 'finds the tool proxy service endpoint'
+    it 'finds the tool proxy service endpoint' do
+      expect(tcp_helper.tp_service_url.to_s).to eq 'http://canvas.docker/api/lti/courses/2/tool_proxy'
+    end
+  end
 end
