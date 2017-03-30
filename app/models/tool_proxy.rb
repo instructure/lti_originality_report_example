@@ -3,7 +3,7 @@ class ToolProxy < ActiveRecord::Base
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
   ENABLED_CAPABILITY = %w(Security.splitSecret).freeze
-  REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection vnd.Canvas.OriginalityReport).freeze
+  REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
 
   # to_json
   #
@@ -57,6 +57,7 @@ class ToolProxy < ActiveRecord::Base
   # security_contract
   #
   # Returns the security contract for use in the tool proxy (See section 5.6)
+  # TODO include the originality report service
   def security_contract
     {
       tp_half_shared_secret: tp_half_shared_secret

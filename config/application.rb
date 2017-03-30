@@ -23,6 +23,8 @@ module SimilarityDetectionReferenceTool
     config.log_tags  = [:subdomain, :uuid]
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
 
+    config.autoload_paths << Rails.root.join('lib')
+
     # Action mailer settings.
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
