@@ -1,11 +1,11 @@
 require 'rails_helper'
 require 'lti_spec_helper'
 
-RSpec.describe Registration::ToolConsumerProfile do
+RSpec.describe RegistrationHelper::ToolConsumerProfile do
   include_context 'lti_spec_helper'
 
   let(:http_party) { class_double(HTTParty).as_stubbed_const }
-  let(:tcp_helper) { Registration::ToolConsumerProfile.new('http://www.tcp.com', access_token) }
+  let(:tcp_helper) { RegistrationHelper::ToolConsumerProfile.new('http://www.tcp.com', access_token) }
 
   before do
     allow(http_party).to receive_messages(get: tool_consumer_profile)
@@ -14,7 +14,7 @@ RSpec.describe Registration::ToolConsumerProfile do
   context 'fetch tool consumer profile' do
     it 'fetches the tool consumer profile' do
       expect(http_party).to receive(:get)
-      Registration::ToolConsumerProfile.new('http://www.tcp.com', access_token)
+      RegistrationHelper::ToolConsumerProfile.new('http://www.tcp.com', access_token)
     end
   end
 

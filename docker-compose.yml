@@ -33,17 +33,6 @@ services:
     environment:
       VIRTUAL_HOST: .sdrt.docker
 
-  sidekiq:
-    depends_on:
-      - 'postgres'
-      - 'redis'
-    build: .
-    command: sidekiq -C config/sidekiq.yml.erb
-    volumes:
-      - '.:/similarity_detection_reference_tool'
-    env_file:
-      - '.env'
-
   cable:
     depends_on:
       - 'redis'

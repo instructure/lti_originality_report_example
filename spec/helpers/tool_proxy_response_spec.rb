@@ -1,12 +1,12 @@
 require 'rails_helper'
 require 'lti_spec_helper'
 
-RSpec.describe Registration::ToolProxyResponse do
+RSpec.describe RegistrationHelper::ToolProxyResponse do
   include_context 'lti_spec_helper'
 
   let(:http_party_response) { instance_double(HTTParty::Response) }
   let(:redirect_url) { 'http://tool.consumer.com/redirect' }
-  let(:tp_response_helper) { Registration::ToolProxyResponse.new(http_party_response, redirect_url) }
+  let(:tp_response_helper) { RegistrationHelper::ToolProxyResponse.new(http_party_response, redirect_url) }
 
   before do
     allow(http_party_response).to receive_messages(body: tp_response)
