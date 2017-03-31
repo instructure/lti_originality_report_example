@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -22,14 +24,13 @@ module SimilarityDetectionReferenceTool
     config.action_mailer.raise_delivery_errors = false
     config.action_mailer.perform_caching = false
 
-
-    if ENV["RAILS_LOG_TO_STDOUT"].present?
+    if ENV['RAILS_LOG_TO_STDOUT'].present?
       logger = ActiveSupport::Logger.new(STDOUT)
       logger.formatter = config.log_formatter
       config.logger = ActiveSupport::TaggedLogging.new(logger)
     end
 
     config.cache_store = :memory_store
-    config.cache_store = :redis_store, ENV['REDIS_CACHE_URL'] if ENV["REDIS_CACHE"].present?
+    config.cache_store = :redis_store, ENV['REDIS_CACHE_URL'] if ENV['REDIS_CACHE'].present?
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.
@@ -7,6 +9,6 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 
 # Pre-compile additional assets.
-Rails.application.config.assets.precompile << proc do |path|
-  true if path =~ /\.(eot|svg|ttf|woff|png)\z/
-end
+Rails.application.config.assets.precompile << (proc do |path|
+  true if path.match?(/\.(eot|svg|ttf|woff|png)\z/)
+end)
