@@ -1,0 +1,2 @@
+module AssignmentConfigurationHelper
+end
