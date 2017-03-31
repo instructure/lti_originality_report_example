@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.0
+  TargetRubyVersion: 2.4
 
   Exclude:
     - 'db/**/*'
@@ -27,3 +27,10 @@ Style/ClassAndModuleChildren:
   #
   # With it disabled, either or is valid.
   Enabled: false
+
+Metrics/LineLength:
+  # Change the default 80 chars limit value
+  Max: 120
+  # If you want the rule not to apply to a specific folder/file
+  Exclude:
+    - 'db/schema.rb'
