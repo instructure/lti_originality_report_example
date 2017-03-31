@@ -12,15 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20170329205058) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "tool_proxies", force: :cascade do |t|
     t.string "guid",          null: false
     t.string "shared_secret", null: false
     t.string "tcp_url",       null: false
     t.string "base_url",      null: false
-    t.index ["guid"], name: "index_tool_proxies_on_guid", using: :btree
+    t.index ["guid"], name: "index_tool_proxies_on_guid"
   end
 
 end

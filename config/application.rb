@@ -12,6 +12,8 @@ module SimilarityDetectionReferenceTool
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.autoload_paths << Rails.root.join('lib')
+
     # Set up logging to be the same in all environments but control the level
     # through an environment variable.
     config.log_level = ENV['LOG_LEVEL'] || :debug
@@ -27,9 +29,7 @@ module SimilarityDetectionReferenceTool
       config.logger = ActiveSupport::TaggedLogging.new(logger)
     end
 
-    config.autoload_paths << Rails.root.join('lib')
-
     config.cache_store = :memory_store
-    config.cache_store = :redis, ENV['REDIS_CACHE_URL'] if ENV["REDIS_CACHE"].present?
+    config.cache_store = :redis_store, ENV['REDIS_CACHE_URL'] if ENV["REDIS_CACHE"].present?
   end
 end
