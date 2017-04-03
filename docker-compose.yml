@@ -25,7 +25,7 @@ services:
     env_file:
       - '.env'
     environment:
-      VIRTUAL_HOST: .sdrt.docker
+      VIRTUAL_HOST: .originality.docker
       DATABASE_URL: postgres://postgres@postgres/sdrt?
 
 volumes:
