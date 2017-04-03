@@ -55,6 +55,12 @@ RSpec.describe ToolProxy, type: :model do
         resource_handler_keys = tool_profile['resource_handler'].first.keys
         expect(resource_handler_keys).to match_array(expected_keys)
       end
+
+      it "includes 'resource_handler' with a valid 'message'" do
+        expected_keys = %w(message_type path enabled_capability)
+        message_keys = tool_profile['resource_handler'].first['message'].first.keys
+        expect(message_keys).to match_array(expected_keys)
+      end
     end
 
     context 'security_contract' do
@@ -62,6 +68,10 @@ RSpec.describe ToolProxy, type: :model do
 
       it "includes 'tp_half_shared_secret' of length 128" do
         expect(security_contract['tp_half_shared_secret'].length).to eq 128
+      end
+
+      it 'uses the originality reports service' do
+        expect(security_contract['tool_service'].first['service']).to eq 'vnd.Canvas.webhooksSubscription'
       end
     end
   end
