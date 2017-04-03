@@ -133,6 +133,17 @@ class ToolProxy < ActiveRecord::Base
     ]
   end
 
+  # services_offered
+  #
+  # Returns a list of services offered by the tool provider.
+  def services_offered
+    [{
+        "id": "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
+        "action": ["POST"],
+        "endpoint": "http://www.sdrt.com/handler"
+    }]
+  end
+
   # resource_handler
   #
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
