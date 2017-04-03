@@ -61,6 +61,16 @@ RSpec.describe ToolProxy, type: :model do
         message_keys = tool_profile['resource_handler'].first['message'].first.keys
         expect(message_keys).to match_array(expected_keys)
       end
+
+      it "includes 'vnd.Canvas.SubmissionEvent' service" do
+        service = tool_profile['services_offered'].first
+        expect(service['id'].split('#').last).to eq 'vnd.Canvas.SubmissionEvent'
+      end
+
+      it "correctly sets the 'vnd.Canvas.SubmissionEvent' service endpoint" do
+        service = tool_profile['services_offered'].first
+        expect(service['endpoint']).to eq "#{request.base_url}/live-events"
+      end
     end
 
     context 'security_contract' do
