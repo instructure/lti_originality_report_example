@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 20170403190431) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "tc_id",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "tc_id",         null: false
+    t.integer  "assignment_id", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["assignment_id"], name: "index_submissions_on_assignment_id", using: :btree
     t.index ["tc_id"], name: "index_submissions_on_tc_id", using: :btree
   end
 
@@ -57,4 +59,5 @@ ActiveRecord::Schema.define(version: 20170403190431) do
 
   add_foreign_key "assignments", "tool_proxies"
   add_foreign_key "originality_reports", "submissions"
+  add_foreign_key "submissions", "assignments"
 end
