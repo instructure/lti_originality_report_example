@@ -42,7 +42,6 @@ class ToolProxy < ActiveRecord::Base
       },
       'base_url_choice' => base_url_choice,
       'resource_handler' => resource_handler,
-      'services_offered' => services_offered
     }
   end
 
@@ -52,12 +51,7 @@ class ToolProxy < ActiveRecord::Base
   # TODO include the originality report service
   def security_contract
     {
-      tp_half_shared_secret: tp_half_shared_secret,
-      tool_service: [{
-        '@type' => 'RestServiceProfile',
-        'service' => 'vnd.Canvas.webhooksSubscription',
-        'action' => ['POST', 'GET', 'PUT', 'DELETE']
-      }]
+      tp_half_shared_secret: tp_half_shared_secret
     }
   end
 
@@ -100,17 +94,6 @@ class ToolProxy < ActiveRecord::Base
     }]
   end
 
-  # services_offered
-  #
-  # Returns a list of services offered by the tool provider.
-  def services_offered
-    [{
-        "id": "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
-        "action": ["POST"],
-        "endpoint": "http://www.sdrt.com/handler"
-    }]
-  end
-
   # resource_handler
   #
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
@@ -121,12 +104,7 @@ class ToolProxy < ActiveRecord::Base
       },
       'resource_name' => {
         'default_value' => 'similarity detection reference tool'
-      },
-      'message' => [{
-        'message_type' => 'basic-lti-launch-request',
-        'path' => '/assignment-configuration',
-        'enabled_capability' => ["Canvas.placements.similarityDetection"]
-      }]
+      }
     }]
   end
 end
