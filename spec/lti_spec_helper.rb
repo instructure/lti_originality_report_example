@@ -7,7 +7,7 @@ RSpec.shared_context 'lti_spec_helper', shared_context: :metadata do
       tc_profile_url: 'http://canvas.docker/api/lti/courses/2/tool_consumer_profile',
       launch_presentation_return_url: 'http://canvas.docker/courses/2/lti/registration_return',
       launch_presentation_document_target: 'iframe',
-      oauth2_access_token_url: 'http://canvas.docker/api/lti/courses/2/authorize',
+      oauth2_access_token_url: 'http://canvas.docker/api/lti/courses/2/authorize'
     }
   end
   let(:access_token) { 'eya34a34.a4453ad.12323234a' }

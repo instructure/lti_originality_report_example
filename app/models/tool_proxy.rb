@@ -8,7 +8,7 @@ class ToolProxy < ActiveRecord::Base
   # to_json
   #
   # Returns a tool proxy as a hash
-  def as_json(options = {})
+  def as_json(*)
     tool_proxy_hash = super()
     tool_proxy_hash.merge(
       '@context' => 'http://purl.imsglobal.org/ctx/lti/v2/ToolProxy',
@@ -41,7 +41,7 @@ class ToolProxy < ActiveRecord::Base
         'product_info' => product_info
       },
       'base_url_choice' => base_url_choice,
-      'resource_handler' => resource_handler,
+      'resource_handler' => resource_handler
     }
   end
 

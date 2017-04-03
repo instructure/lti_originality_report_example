@@ -27,7 +27,7 @@ RSpec.describe ToolProxy, type: :model do
     end
 
     context 'tool_profile' do
-      let(:tool_profile){ JSON.parse(tp_json)['tool_profile'] }
+      let(:tool_profile) { JSON.parse(tp_json)['tool_profile'] }
 
       it "includes 'lti_version'" do
         expect(tool_profile['lti_version']).to eq 'LTI-2p0'

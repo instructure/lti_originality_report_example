@@ -4,7 +4,7 @@ require 'lti_spec_helper'
 RSpec.describe RegistrationController, type: :controller do
   include_context 'lti_spec_helper'
   let(:http_party) { class_double(HTTParty).as_stubbed_const }
-  let(:authorization_response) { double(parsed_response: {'access_token' => access_token}, body: {}) }
+  let(:authorization_response) { double(parsed_response: { 'access_token' => access_token }, body: {}) }
   let(:tool_proxy_response) { double(parsed_response: tp_response, body: tp_response, code: 201) }
 
   before do
@@ -12,10 +12,10 @@ RSpec.describe RegistrationController, type: :controller do
     allow(http_party).to receive_messages(post: tool_proxy_response)
   end
 
-  describe "POST #register" do
+  describe 'POST #register' do
     it 'registers a tool proxy' do
       post :register, registration_message
-      expect(response).to redirect_to  "http://canvas.docker/courses/2/lti/registration_return?tool_proxy_guid=#{tool_proxy_guid}&status=success"
+      expect(response).to redirect_to "http://canvas.docker/courses/2/lti/registration_return?tool_proxy_guid=#{tool_proxy_guid}&status=success"
     end
 
     it 'persists a ToolProxy' do
@@ -32,9 +32,9 @@ RSpec.describe RegistrationController, type: :controller do
 
     it 'redirects with status set to failure if required capabilities are missing' do
       prev_capabilities = ToolProxy::REQUIRED_CAPABILITIES
-      ToolProxy::REQUIRED_CAPABILITIES = ['Capaability.not.Offered']
+      ToolProxy::REQUIRED_CAPABILITIES = %w(Capaability.not.Offered).freeze
       post :register, registration_message
-      expect(response).to redirect_to  "http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Missing%20required%20capabilities"
+      expect(response).to redirect_to  'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Missing%20required%20capabilities'
       ToolProxy::REQUIRED_CAPABILITIES = prev_capabilities
     end
 
@@ -43,7 +43,7 @@ RSpec.describe RegistrationController, type: :controller do
       allow(http_party).to receive_messages(post: tool_proxy_response)
 
       post :register, registration_message
-      expect(response).to redirect_to  "http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Error%20received%20from%20tool%20consumer"
+      expect(response).to redirect_to  'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Error%20received%20from%20tool%20consumer'
     end
   end
 end

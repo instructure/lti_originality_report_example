@@ -25,7 +25,7 @@ RSpec.describe RegistrationHelper::ToolConsumerProfile do
 
     it 'returns false if the TCP does not contain all required capabilities' do
       backup_capabilities = ToolProxy::REQUIRED_CAPABILITIES
-      ToolProxy::REQUIRED_CAPABILITIES = ['Capaability.not.Offered']
+      ToolProxy::REQUIRED_CAPABILITIES = %w(Capaability.not.Offered).freeze
       expect(tcp_helper.supports_required_capabilities?).to be_falsey
       ToolProxy::REQUIRED_CAPABILITIES = backup_capabilities
     end
