@@ -1,10 +1,13 @@
 ---
 
 development:
-  url: <%= ENV['DATABASE_URL'].present? ? ENV['DATABASE_URL'].gsub('?', '_development?') : 'sqlite3:db/lti_originality_report_example_development.sqlite3' %>
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_development?') %>
 
 test:
-  url: <%= ENV['DATABASE_URL'].present? ? ENV['DATABASE_URL'].gsub('?', 'test?') : 'sqlite3:db/lti_originality_report_example_test.sqlite3' %>
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_test?') %>
+
+staging:
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_staging?') %>
 
 production:
-  url: <%= ENV['DATABASE_URL'].gsub('?', '_production?') if ENV['DATABASE_URL'].present? %>
+  url: <%= ENV['DATABASE_URL'].gsub('?', '_production?') %>
