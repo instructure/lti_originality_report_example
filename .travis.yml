@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - 2.4.0
+before_script:
+  - RACK_ENV=test bundle exec rake db:create
+script:
+  - RACK_ENV=test bundle exec rake db:migrate
+  - bundle exec rake rubocop
+  - bundle exec rake
+addons:
+  code_climate:
+    repo_token: 18f14c34d0679df3176e9fcdab6ff84272df526df53fc27e1080ecd9203ed327
