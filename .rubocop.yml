@@ -16,7 +16,7 @@ Style/AndOr:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/Style/ColonMethodCall:
+Style/ColonMethodCall:
   Exclude:
     - 'spec/**/*'
 

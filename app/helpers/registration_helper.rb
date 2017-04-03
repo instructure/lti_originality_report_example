@@ -58,7 +58,7 @@ module RegistrationHelper
     # Returns the URL to redirect to upon successfuly tool
     # proxy creation.
     def registration_success_url
-       "#{redirect_url}?tool_proxy_guid=#{tool_proxy_guid}&status=success"
+      "#{redirect_url}?tool_proxy_guid=#{tool_proxy_guid}&status=success"
     end
 
     # tool_proxy_guid
@@ -84,7 +84,6 @@ module RegistrationHelper
       tp_response.code == 201
     end
   end
-
 
   def registration_failure_url(message)
     "#{registration_redirect_url}?status=failure&lti_errormsg=#{URI.encode(message)}"

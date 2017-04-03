@@ -43,7 +43,7 @@ RSpec.describe RegistrationController, type: :controller do
       allow(http_party).to receive_messages(post: tool_proxy_response)
 
       post :register, registration_message
-      expect(response).to redirect_to  'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Error%20received%20from%20tool%20consumer'
+      expect(response).to redirect_to 'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Error%20received%20from%20tool%20consumer'
     end
   end
 end
