@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'httparty'
-gem 'ims-lti'
+gem 'ims-lti', path: '~/Developement/ims-lti'
 gem 'jbuilder', '~> 2.5'
 gem 'json-jwt'
 gem 'pg', '~> 0.18'
