@@ -63,12 +63,12 @@ RSpec.describe ToolProxy, type: :model do
       end
 
       it "includes 'vnd.Canvas.SubmissionEvent' service" do
-        service = tool_profile['services_offered'].first
-        expect(service['id'].split('#').last).to eq 'vnd.Canvas.SubmissionEvent'
+        service = tool_profile['service_offered'].first
+        expect(service['@id'].split('#').last).to eq 'vnd.Canvas.SubmissionEvent'
       end
 
       it "correctly sets the 'vnd.Canvas.SubmissionEvent' service endpoint" do
-        service = tool_profile['services_offered'].first
+        service = tool_profile['service_offered'].first
         expect(service['endpoint']).to eq "#{request.base_url}/live-events"
       end
     end
