@@ -79,22 +79,22 @@ class ToolProxy < ActiveRecord::Base
   # Returns the product info to be used in the tool profile (See section 5.1.2)
   def product_info
     {
-      'product_name' => {
-        'default_value' => 'similarity detection reference tool'
+      product_name: {
+        default_value: 'similarity detection reference tool'
       },
-      'product_version' => '1.0',
-      'description' => {
-        'default_value' => 'LTI 2.1 tool provider reference implementation'
+      product_version: '1.0',
+      description: {
+        default_value: 'LTI 2.1 tool provider reference implementation'
       },
-      'product_family' => {
-        'code' => 'similarity detection reference tool',
-        'vendor' => {
-          'code' => 'Instructure.com',
-          'vendor_name' => {
-            'default_value' => 'Instructure'
+      product_family: {
+        code: 'similarity detection reference tool',
+        vendor: {
+          code: 'Instructure.com',
+          vendor_name: {
+            default_value: 'Instructure'
           },
-          'description' => {
-            'default_value' => 'Canvas Learning Management System'
+          description: {
+            default_value: 'Canvas Learning Management System'
           }
         }
       }
