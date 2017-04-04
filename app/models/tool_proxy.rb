@@ -120,7 +120,7 @@ class ToolProxy < ActiveRecord::Base
     IMS::LTI::Models::ResourceHandler.from_json(
       resource_type: { code: 'placements' },
       resource_name: { default_value: 'lti_example_tool', key: '' },
-      message: message.as_json
+      message: [message]
     )
   end
 end
