@@ -11,7 +11,7 @@ RSpec.describe ToolProxy, type: :model do
     let(:tp_json) { ToolProxy.new(guid: guid, tcp_url: tcp_url, base_url: request.base_url).to_json }
 
     it "includes a valid '@context'" do
-      expect(JSON.parse(tp_json)['@context']).to eq 'http://purl.imsglobal.org/ctx/lti/v2/ToolProxy'
+      expect(JSON.parse(tp_json)['@context']).to eq ['http://purl.imsglobal.org/ctx/lti/v2/ToolProxy']
     end
 
     it "sets 'lti_version' to LTI-2p0" do
@@ -51,7 +51,7 @@ RSpec.describe ToolProxy, type: :model do
       end
 
       it "includes a valid 'resource_handler'" do
-        expected_keys = %w(resource_type resource_name)
+        expected_keys = %w(resource_type resource_name message)
         resource_handler_keys = tool_profile['resource_handler'].first.keys
         expect(resource_handler_keys).to match_array(expected_keys)
       end

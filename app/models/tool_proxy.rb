@@ -9,15 +9,7 @@ class ToolProxy < ActiveRecord::Base
   #
   # Returns a tool proxy as a hash
   def as_json(*)
-    tool_proxy_hash = super()
-    tool_proxy_hash.merge(
-      '@context' => 'http://purl.imsglobal.org/ctx/lti/v2/ToolProxy',
-      lti_version: 'LTI-2p0', # LTI-2p0 should be used for all LTI 2.x tools
-      tool_consumer_profile: tcp_url,
-      tool_profile: tool_profile,
-      security_contract: security_contract,
-      enabled_capability: ENABLED_CAPABILITY # (Section 5.3)
-    )
+    ims_tool_proxy
   end
 
   # tp_half_shared_secret
@@ -32,27 +24,47 @@ class ToolProxy < ActiveRecord::Base
 
   # tool_profile
   #
+  # Returns a IMS::LTI::Models::ToolProxy representation of a tool proxy
+  def ims_tool_proxy
+    IMS::LTI::Models::ToolProxy.new(
+      id: "instructure.com/lti_originality_report_example:#{SecureRandom.uuid}",
+      lti_version: 'LTI-2p0',
+      security_contract: security_contract,
+      tool_consumer_profile: tcp_url,
+      tool_profile: tool_profile,
+      enabled_capability: ENABLED_CAPABILITY
+    )
+  end
+
+  # tool_profile
+  #
   # Returns a tool profile for use in the tool proxy (See section 5.4).
   def tool_profile
-    {
-      'lti_version' => 'LTI-2p0',
-      'product_instance' => {
-        'guid' => 'be42ae52-23fe-48f5-a783-40ecc7ef6d5c',
-        'product_info' => product_info
-      },
-      'base_url_choice' => base_url_choice,
-      'resource_handler' => resource_handler
-    }
+    IMS::LTI::Models::ToolProfile.new(
+      lti_version: 'LTI-2p0',
+      product_instance: product_instance,
+      resource_handler: [resource_handler],
+      base_url_choice: [base_url_choice]
+    )
   end
 
   # security_contract
   #
   # Returns the security contract for use in the tool proxy (See section 5.6)
-  # TODO include the originality report service
   def security_contract
-    {
+    IMS::LTI::Models::SecurityContract.new(
       tp_half_shared_secret: tp_half_shared_secret
-    }
+    )
+  end
+
+  # product_instance
+  #
+  # Returns to tool proxy product instance
+  def product_instance
+    IMS::LTI::Models::ProductInstance.new.from_json(
+      guid: 'be42ae52-23fe-48f5-a783-40ecc7ef6d5c',
+      product_info: product_info
+    )
   end
 
   # product_info
@@ -86,25 +98,29 @@ class ToolProxy < ActiveRecord::Base
   #
   # Returns the product info to be used in the tool profile (See section 5.4.5)
   def base_url_choice
-    [{
-      'default_base_url' => base_url,
-      'selector' => {
-        'applies_to' => ['MessageHandler']
-      }
-    }]
+    IMS::LTI::Models::BaseUrlChoice.new(
+      default_base_url: base_url,
+      selector: IMS::LTI::Models::BaseUrlSelector.new(
+        applies_to: ['MessageHandler']
+      )
+    )
+  end
+
+  def message
+    IMS::LTI::Models::MessageHandler.new(
+      message_type: 'basic-lti-launch-request',
+      path: '/banana'
+    )
   end
 
   # resource_handler
   #
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
   def resource_handler
-    [{
-      'resource_type' => {
-        'code' => 'similarity detection reference tool'
-      },
-      'resource_name' => {
-        'default_value' => 'similarity detection reference tool'
-      }
-    }]
+    IMS::LTI::Models::ResourceHandler.from_json(
+      resource_type: { code: 'placements' },
+      resource_name: { default_value: 'lti_example_tool', key: '' },
+      message: message.as_json
+    )
   end
 end
