@@ -1,5 +1,11 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'pages#home'
+
+  scope(controller: :registration) do
+    post 'register', action: :register, as: :registration
+  end
+
+  scope(controller: :assignment_configuration) do
+    post 'assignment-configuration', action: :configure, as: :configuration
+  end
 end
