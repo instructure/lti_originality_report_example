@@ -107,10 +107,12 @@ class ToolProxy < ActiveRecord::Base
   end
 
   def message
-    IMS::LTI::Models::MessageHandler.new(
-      message_type: 'basic-lti-launch-request',
-      path: '/banana'
-    )
+    [
+      IMS::LTI::Models::MessageHandler.new(
+        message_type: 'basic-lti-launch-request',
+        path: '/basic-launch'
+      )
+    ]
   end
 
   # resource_handler
@@ -120,7 +122,7 @@ class ToolProxy < ActiveRecord::Base
     IMS::LTI::Models::ResourceHandler.from_json(
       resource_type: { code: 'placements' },
       resource_name: { default_value: 'lti_example_tool', key: '' },
-      message: [message]
+      message: message
     )
   end
 end
