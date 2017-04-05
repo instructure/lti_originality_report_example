@@ -6,7 +6,7 @@ RSpec.describe RegistrationController, type: :controller do
   let(:http_party) { class_double(HTTParty).as_stubbed_const }
   let(:authorization_response) { double(parsed_response: { 'access_token' => access_token }, body: {}) }
   let(:tool_proxy_response) { double(parsed_response: tp_response, body: tp_response, code: 201) }
-  let(:auth_service) { double('AuthenticationService', access_token: 'test_token') }
+  let(:auth_service) { double('AuthenticationService', access_token: 'test_token', additional_claims: {}) }
 
   before do
     allow(IMS::LTI::Services::AuthenticationService).to receive(:new) { auth_service }

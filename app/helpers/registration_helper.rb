@@ -106,13 +106,14 @@ module RegistrationHelper
 
   def jwt_access_token
     @_jwt_access_token ||= begin
-      IMS::LTI::Services::AuthenticationService.new(
+      auth_service = IMS::LTI::Services::AuthenticationService.new(
         iss: '',
         aud: params[:oauth2_access_token_url],
         sub: '10000000000003',
         secret: 'BXfJR44Ng3czXFt02UZwrzMSFn1GcT8KjY6wUL0RJSVIv271eCoa4KLzwciSg4fD',
-        additional_claims: { code: params[:reg_key] }
-      ).access_token
+      )
+      auth_service.additional_claims[:code] = params[:reg_key]
+      auth_service.access_token
     end
   end
 
