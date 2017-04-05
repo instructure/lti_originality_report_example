@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/instructure/ims-lti.git
-  revision: 6cf4780ec78413767ae26dfc4e2a80b93f8a2157
-  branch: auth_service
+  revision: 3374898e765e175258620297c97239cf14171e1b
+  branch: ws_security
   specs:
     ims-lti (2.1.2)
       builder (~> 3.2)
