@@ -3,7 +3,7 @@
 # Handles incoming registration requests from tool
 # consumers.
 class RegistrationController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: :register
+  skip_before_action :verify_authenticity_token, only: :register
   include RegistrationHelper
 
   def register

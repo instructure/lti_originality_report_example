@@ -106,44 +106,14 @@ module RegistrationHelper
 
   def jwt_access_token
     @_jwt_access_token ||= begin
-      get_jwt_access_token(
-        url: params[:oauth2_access_token_url],
-        sub: '10000000000003', # Developer key global id
-        secret: 'BXfJR44Ng3czXFt02UZwrzMSFn1GcT8KjY6wUL0RJSVIv271eCoa4KLzwciSg4fD', # Developer key api key. Don't store this here ;)
-        code: params[:reg_key]
-      )
+      IMS::LTI::Services::AuthenticationService.new(
+        iss: '',
+        aud: params[:oauth2_access_token_url],
+        sub: '10000000000003',
+        secret: 'BXfJR44Ng3czXFt02UZwrzMSFn1GcT8KjY6wUL0RJSVIv271eCoa4KLzwciSg4fD',
+        additional_claims: { code: params[:reg_key] }
+      ).access_token
     end
   end
 
-  def get_jwt_access_token(url:, sub:, secret:, code: nil)
-    assertion = JSON::JWT.new(
-      sub: sub,
-      aud: url,
-      exp: 1.minute.from_now,
-      iat: Time.now.to_i,
-      jti: SecureRandom.uuid
-    )
-    assertion = assertion.sign(secret, :HS256).to_s
-
-    request = {
-      body: {
-        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-        assertion: assertion
-      }
-    }
-
-    # If using a developer key as the subject
-    if code.present?
-      request = {
-        body: {
-          grant_type: 'authorization_code',
-          code: code,
-          assertion: assertion
-        }
-      }
-    end
-
-    response = HTTParty.post(url, request)
-    response.parsed_response['access_token']
-  end
 end
