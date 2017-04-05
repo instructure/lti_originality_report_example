@@ -1,8 +1,11 @@
 class AssignmentsController < ApplicationController
   include AssignmentsHelper
-  skip_before_filter :verify_authenticity_token, only: :create
-  after_action :allow_iframe, only: :create
-  before_action :lti_authentication, only: :create
+  skip_before_filter :verify_authenticity_token, only: :configure
+  after_action :allow_iframe, only: :configure
+  before_action :lti_authentication, only: :configure
 
-  def create; end
+  def configure
+    @editing = edit_assignment?
+    find_or_create_assignment
+  end
 end

@@ -12,12 +12,32 @@ module AssignmentsHelper
   end
 
   def shared_secret
-    @_shared_secret ||= ToolProxy.find_by(guid: params['oauth_consumer_key']).shared_secret
+    tool_proxy.shared_secret
   end
 
   def not_expired?
     timestamp = params['oauth_timestamp'].to_i
     allowed_future_skew = 60.seconds
     timestamp.between?(5.minutes.ago.to_i, (Time.now + allowed_future_skew).to_i)
+  end
+
+  def tool_proxy
+    @_tool_proxy ||= ToolProxy.find_by(guid: params['oauth_consumer_key'])
+  end
+
+  def edit_assignment?
+    existing_assignment.present?
+  end
+
+  def existing_assignment
+    @_existing_assignment ||= Assignment.find_by(lti_assignment_id: params['ext_lti_assignment_id'])
+  end
+
+  def find_or_create_assignment
+    @_assignment ||= begin
+      return existing_assignment if existing_assignment.present?
+      Assignment.create(lti_assignment_id: params['ext_lti_assignment_id'],
+                        tool_proxy: tool_proxy)
+    end
   end
 end

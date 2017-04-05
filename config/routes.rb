@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   end
 
   scope(controller: :assignments) do
-    post 'assignments/new', action: :create, as: :assignment_creation
+    post 'assignments/configure', action: :configure, as: :assignment_configuration
   end
 end
