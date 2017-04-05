@@ -117,8 +117,8 @@ class ToolProxy < ActiveRecord::Base
     [
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
-        path: '/assignment-configuration',
-        enabled_capability: %w[Canvas.placements.similarityDetection]
+        path: '/assignments/new',
+        enabled_capability: %w(Canvas.placements.similarityDetection)
       )
     ]
   end

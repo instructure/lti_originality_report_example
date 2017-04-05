@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     post 'register', action: :register, as: :registration
   end
 
-  scope(controller: :assignment_configuration) do
-    post 'assignment-configuration', action: :configure, as: :configuration
+  scope(controller: :assignments) do
+    post 'assignments/new', action: :create, as: :assignment_creation
   end
 end
