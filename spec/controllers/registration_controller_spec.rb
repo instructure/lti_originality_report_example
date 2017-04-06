@@ -4,10 +4,23 @@ require 'lti_spec_helper'
 RSpec.describe RegistrationController, type: :controller do
   include_context 'lti_spec_helper'
 
+  let(:tc_half_shared_secret) { SecureRandom.uuid }
+  let(:tool_proxy_guid) { SecureRandom.uuid }
+  let(:ims_tool_proxy) { double(tc_half_shared_secret: tc_half_shared_secret, tool_proxy_guid: tool_proxy_guid) }
+  let(:ims_tool_consumer_profile) { IMS::LTI::Models::ToolConsumerProfile.from_json(tool_consumer_profile) }
+  let(:tool_proxy_registration_service) { double(tool_consumer_profile: ims_tool_consumer_profile) }
+  let(:api_service_instance) { double(tp_registration_service: tool_proxy_registration_service) }
+
+  before do
+    allow(IMS::LTI::Services::ApiService).to receive(:new) { api_service_instance }
+    allow(api_service_instance).to receive(:authentication_service=)
+    allow(tool_proxy_registration_service).to receive(:register_tool_proxy) { ims_tool_proxy }
+  end
+
   describe 'POST #register' do
     it 'registers a tool proxy' do
       post :register, params: registration_message
-      expect(response).to redirect_to "http://canvas.docker/courses/2/lti/registration_return?tool_proxy_guid=#{tool_proxy_guid}&status=success"
+      expect(response).to redirect_to "http://canvas.docker/courses/2/lti/registration_return?status=success&tool_proxy_guid=#{tool_proxy_guid}"
     end
 
     it 'persists a ToolProxy' do

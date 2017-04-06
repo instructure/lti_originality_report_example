@@ -1,0 +1,7 @@
+development:
+  developer_key: '10000000000003'
+  developer_secret: 'BXfJR44Ng3czXFt02UZwrzMSFn1GcT8KjY6wUL0RJSVIv271eCoa4KLzwciSg4fD'
+
+test:
+  developer_key: '10000000000003'
+  developer_secret: 'BXfJR44Ng3czXFt02UZwrzMSFn1GcT8KjY6wUL0RJSVIv271eCoa4KLzwciSg4fD'
