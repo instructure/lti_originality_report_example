@@ -9,12 +9,15 @@ RSpec.describe RegistrationController, type: :controller do
   let(:ims_tool_proxy) { double(tc_half_shared_secret: tc_half_shared_secret, tool_proxy_guid: tool_proxy_guid) }
   let(:ims_tool_consumer_profile) { IMS::LTI::Models::ToolConsumerProfile.from_json(tool_consumer_profile) }
   let(:tool_proxy_registration_service) { double(tool_consumer_profile: ims_tool_consumer_profile) }
-  let(:api_service_instance) { double(tp_registration_service: tool_proxy_registration_service) }
+  let(:registration_services_instance) { double(tp_registration_service: tool_proxy_registration_service) }
+  let(:authentication_service) { double(additional_params: {}) }
 
   before do
-    allow(IMS::LTI::Services::ApiService).to receive(:new) { api_service_instance }
-    allow(api_service_instance).to receive(:authentication_service=)
+    allow(IMS::LTI::Services::RegistrationServices).to receive(:new) { registration_services_instance }
+    allow(registration_services_instance).to receive(:authentication_service=)
     allow(tool_proxy_registration_service).to receive(:register_tool_proxy) { ims_tool_proxy }
+    allow(registration_services_instance).to receive(:authentication_service) { authentication_service }
+    allow(registration_services_instance).to receive(:registration_service) { tool_proxy_registration_service }
   end
 
   describe 'POST #register' do
@@ -43,7 +46,8 @@ RSpec.describe RegistrationController, type: :controller do
       ToolProxy::REQUIRED_CAPABILITIES = prev_capabilities
     end
 
-    it 'redirects with status set to failure if status of tp create response is not 201' do
+    it 'redirects with status set to failure if status of tp create response is not success' do
+      allow(tool_proxy_registration_service).to receive(:register_tool_proxy) { false }
       post :register, params: registration_message
       expect(response).to redirect_to 'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Error%20received%20from%20tool%20consumer'
     end

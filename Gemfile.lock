@@ -1,12 +1,12 @@
 GIT
   remote: https://github.com/instructure/ims-lti.git
-  revision: 3374898e765e175258620297c97239cf14171e1b
+  revision: 42e5f5b64d79b42632243f8f5c438cd9ac16ec0a
   branch: ws_security
   specs:
     ims-lti (2.1.2)
       builder (~> 3.2)
-      faraday (~> 0.8)
-      faraday_middleware (~> 0.8)
+      faraday (~> 0.10)
+      faraday_middleware (~> 0.10)
       json-jwt (~> 1.7)
       simple_oauth (= 0.2)
 

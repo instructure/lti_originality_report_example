@@ -35,7 +35,7 @@ module RegistrationHelper
   end
 
   def registration_success_url(tp_guid)
-    "#{registration_request.launch_presentation_return_url}?status=sucess&tool_proxy_guid=#{tp_guid}"
+    "#{registration_request.launch_presentation_return_url}?status=success&tool_proxy_guid=#{tp_guid}"
   end
 
   def registration_failure_url(message)
