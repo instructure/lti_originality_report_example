@@ -6,6 +6,8 @@ AllCops:
     - 'log/**/*'
     - 'tmp/**/*'
     - 'vendor/bundle/**/*'
+    - 'bin/**/*'
+    - 'config/**/*'
 Documentation:
   # Skips checking to make sure top level modules / classes have a comment.
   Enabled: false

@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'httparty'
-gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git', :branch => 'ws_security'
+gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_security'
 gem 'jbuilder', '~> 2.5'
 gem 'json-jwt'
 gem 'pg', '~> 0.18'

@@ -2,8 +2,8 @@ class ToolProxy < ActiveRecord::Base
   validates :guid, :shared_secret, :tcp_url, :base_url, :tp_half_shared_secret, presence: true
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
-  ENABLED_CAPABILITY = %w(Security.splitSecret).freeze
-  REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
+  ENABLED_CAPABILITY = %w[Security.splitSecret].freeze
+  REQUIRED_CAPABILITIES = %w[Canvas.placements.similarityDetection].freeze
 
   # to_json
   #

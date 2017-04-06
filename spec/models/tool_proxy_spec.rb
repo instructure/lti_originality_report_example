@@ -34,13 +34,13 @@ RSpec.describe ToolProxy, type: :model do
       end
 
       it "includes a valid'product_instance'" do
-        expected_keys = %w(guid product_info)
+        expected_keys = %w[guid product_info]
         product_instance_keys = tool_profile['product_instance'].keys
         expect(product_instance_keys).to match_array(expected_keys)
       end
 
       it "includes a valid 'base_url_choice'" do
-        expected_keys = %w(default_base_url selector)
+        expected_keys = %w[default_base_url selector]
         base_url_keys = tool_profile['base_url_choice'].first.keys
         expect(base_url_keys).to match_array(expected_keys)
       end
@@ -51,7 +51,7 @@ RSpec.describe ToolProxy, type: :model do
       end
 
       it "includes a valid 'resource_handler'" do
-        expected_keys = %w(resource_type resource_name message)
+        expected_keys = %w[resource_type resource_name message]
         resource_handler_keys = tool_profile['resource_handler'].first.keys
         expect(resource_handler_keys).to match_array(expected_keys)
       end

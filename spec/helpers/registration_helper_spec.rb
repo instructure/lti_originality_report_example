@@ -56,13 +56,6 @@ RSpec.describe RegistrationHelper, type: :helper do
     end
   end
 
-  describe '#create_tool_proxy' do
-    it 'returns a tool proxy if creation is successful'
-    it 'returns false if creation fails'
-    it 'sets the prepends the tc half shared secret to the tp half'
-    it 'sets the tool proxy guid'
-  end
-
   describe '#registration_success_url' do
     it 'sets the status param to success' do
       url = URI.parse(helper.registration_success_url('tp-guid'))

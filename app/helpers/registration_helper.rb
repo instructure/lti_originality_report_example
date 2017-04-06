@@ -27,7 +27,8 @@ module RegistrationHelper
   end
 
   def create_tool_proxy(tool_proxy)
-    if tp_response = tool_proxy_registration_service.register_tool_proxy(tool_proxy.to_ims_tool_proxy)
+    tp_response = tool_proxy_registration_service.register_tool_proxy(tool_proxy.to_ims_tool_proxy)
+    if tp_response
       shared_secret = tp_response.tc_half_shared_secret + tool_proxy.tp_half_shared_secret
       return tool_proxy.update_attributes(guid: tp_response.tool_proxy_guid, shared_secret: shared_secret)
     end

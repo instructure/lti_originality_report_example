@@ -33,7 +33,8 @@ module SimilarityDetectionReferenceTool
     config.cache_store = :memory_store
     config.cache_store = :redis_store, ENV['REDIS_CACHE_URL'] if ENV['REDIS_CACHE'].present?
 
-    if File.exists?(File.join(Rails.root, 'config', 'canvas_creds.yml'))
+    config_path = File.join(Rails.root, 'config', 'canvas_creds.yml')
+    if File.exist?(config_path)
       config.canvas_creds = config_for :canvas_creds
     else
       config.canvas_creds = {
