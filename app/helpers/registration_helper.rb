@@ -112,7 +112,7 @@ module RegistrationHelper
         sub: '10000000000003',
         secret: 'BXfJR44Ng3czXFt02UZwrzMSFn1GcT8KjY6wUL0RJSVIv271eCoa4KLzwciSg4fD',
       )
-      auth_service.additional_claims[:code] = params[:reg_key]
+      auth_service.additional_params[:code] = params[:reg_key]
       auth_service.access_token
     end
   end
