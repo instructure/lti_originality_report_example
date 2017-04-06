@@ -9,7 +9,7 @@ class ToolProxy < ActiveRecord::Base
   #
   # Returns a tool proxy as a hash
   def as_json(*)
-    ims_tool_proxy
+    to_ims_tool_proxy
   end
 
   # tp_half_shared_secret
@@ -20,12 +20,10 @@ class ToolProxy < ActiveRecord::Base
     @_tp_half_shared_secret ||= SecureRandom.hex(64)
   end
 
-  private
-
   # tool_profile
   #
   # Returns a IMS::LTI::Models::ToolProxy representation of a tool proxy
-  def ims_tool_proxy
+  def to_ims_tool_proxy
     IMS::LTI::Models::ToolProxy.new(
       id: "instructure.com/lti_originality_report_example:#{SecureRandom.uuid}",
       lti_version: 'LTI-2p0',
@@ -35,6 +33,8 @@ class ToolProxy < ActiveRecord::Base
       enabled_capability: ENABLED_CAPABILITY
     )
   end
+
+  private
 
   # tool_profile
   #

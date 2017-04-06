@@ -3,16 +3,6 @@ require 'lti_spec_helper'
 
 RSpec.describe RegistrationController, type: :controller do
   include_context 'lti_spec_helper'
-  let(:http_party) { class_double(HTTParty).as_stubbed_const }
-  let(:authorization_response) { double(parsed_response: { 'access_token' => access_token }, body: {}) }
-  let(:tool_proxy_response) { double(parsed_response: tp_response, body: tp_response, code: 201) }
-  let(:auth_service) { double('AuthenticationService', access_token: 'test_token', additional_claims: {}) }
-
-  before do
-    allow(IMS::LTI::Services::AuthenticationService).to receive(:new) { auth_service }
-    allow(http_party).to receive_messages(get: tool_consumer_profile)
-    allow(http_party).to receive_messages(post: tool_proxy_response)
-  end
 
   describe 'POST #register' do
     it 'registers a tool proxy' do
@@ -41,9 +31,6 @@ RSpec.describe RegistrationController, type: :controller do
     end
 
     it 'redirects with status set to failure if status of tp create response is not 201' do
-      tool_proxy_response = double(parsed_response: tp_response, body: tp_response, code: 401)
-      allow(http_party).to receive_messages(post: tool_proxy_response)
-
       post :register, params: registration_message
       expect(response).to redirect_to 'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Error%20received%20from%20tool%20consumer'
     end
