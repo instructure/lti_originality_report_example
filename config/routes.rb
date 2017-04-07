@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   scope(controller: :assignments) do
     post 'assignments/configure', action: :configure, as: :assignment_configuration
+    post 'assignments/:lti_assignment_id/update', action: :update, as: :assignment_update
   end
 end

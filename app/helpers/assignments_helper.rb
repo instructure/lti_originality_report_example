@@ -42,8 +42,8 @@ module AssignmentsHelper
   def find_or_create_assignment
     @_assignment ||= begin
       return existing_assignment if existing_assignment.present?
-      Assignment.create(lti_assignment_id: params['ext_lti_assignment_id'],
-                        tool_proxy: tool_proxy)
+      Assignment.create!(lti_assignment_id: params['ext_lti_assignment_id'],
+                         tool_proxy: tool_proxy)
     end
   end
 end
