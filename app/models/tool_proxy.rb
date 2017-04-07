@@ -58,7 +58,7 @@ class ToolProxy < ActiveRecord::Base
       tool_service: [IMS::LTI::Models::RestServiceProfile.new(
         type: 'RestServiceProfile',
         service: 'vnd.Canvas.webhooksSubscription',
-        action: %w(POST GET PUT DELETE)
+        action: %w[POST GET PUT DELETE]
       )]
     )
   end
@@ -117,7 +117,7 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
         path: '/assignment-configuration',
-        enabled_capability: %w(Canvas.placements.similarityDetection)
+        enabled_capability: %w[Canvas.placements.similarityDetection]
       )
     ]
   end
@@ -129,8 +129,8 @@ class ToolProxy < ActiveRecord::Base
     [
       IMS::LTI::Models::RestService.new(
         id: "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
-        action: %w(POST),
-        endpoint: "/live-events"
+        action: %w[POST],
+        endpoint: '/live-events'
       )
     ]
   end
