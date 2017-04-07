@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/instructure/ims-lti.git
-  revision: 42e5f5b64d79b42632243f8f5c438cd9ac16ec0a
+  revision: 07234cd5ea41dc5478fa69543027ff2dcdfb7a62
   branch: ws_security
   specs:
     ims-lti (2.1.2)

@@ -12,18 +12,14 @@
 
 ActiveRecord::Schema.define(version: 20170403190431) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "hstore"
-
   create_table "assignments", force: :cascade do |t|
     t.string   "lti_assignment_id", null: false
     t.integer  "tool_proxy_id",     null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.hstore   "settings"
-    t.index ["lti_assignment_id"], name: "index_assignments_on_lti_assignment_id", using: :btree
-    t.index ["tool_proxy_id"], name: "index_assignments_on_tool_proxy_id", using: :btree
+    t.         "settings"
+    t.index ["lti_assignment_id"], name: "index_assignments_on_lti_assignment_id"
+    t.index ["tool_proxy_id"], name: "index_assignments_on_tool_proxy_id"
   end
 
   create_table "originality_reports", force: :cascade do |t|
@@ -36,8 +32,8 @@ ActiveRecord::Schema.define(version: 20170403190431) do
     t.string   "originality_report_lti_url"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.index ["submission_id"], name: "index_originality_reports_on_submission_id", using: :btree
-    t.index ["tc_id"], name: "index_originality_reports_on_tc_id", using: :btree
+    t.index ["submission_id"], name: "index_originality_reports_on_submission_id"
+    t.index ["tc_id"], name: "index_originality_reports_on_tc_id"
   end
 
   create_table "submissions", force: :cascade do |t|
@@ -45,8 +41,8 @@ ActiveRecord::Schema.define(version: 20170403190431) do
     t.integer  "assignment_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["assignment_id"], name: "index_submissions_on_assignment_id", using: :btree
-    t.index ["tc_id"], name: "index_submissions_on_tc_id", using: :btree
+    t.index ["assignment_id"], name: "index_submissions_on_assignment_id"
+    t.index ["tc_id"], name: "index_submissions_on_tc_id"
   end
 
   create_table "tool_proxies", force: :cascade do |t|
@@ -54,10 +50,7 @@ ActiveRecord::Schema.define(version: 20170403190431) do
     t.string "shared_secret", null: false
     t.string "tcp_url",       null: false
     t.string "base_url",      null: false
-    t.index ["guid"], name: "index_tool_proxies_on_guid", using: :btree
+    t.index ["guid"], name: "index_tool_proxies_on_guid"
   end
 
-  add_foreign_key "assignments", "tool_proxies"
-  add_foreign_key "originality_reports", "submissions"
-  add_foreign_key "submissions", "assignments"
 end
