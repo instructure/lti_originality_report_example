@@ -11,10 +11,7 @@ class AssignmentsController < ApplicationController
   def configure
     @editing = edit_assignment?
     assignment = find_or_create_assignment
-    if assignment.settings.present?
-      @settings_one = assignment.settings['settings_one'] == 'true' ? 'checked' : nil
-      @settings_two = assignment.settings['settings_two'] == 'true' ? 'checked' : nil
-    end
+    @settings = assignment.settings
   end
 
   # update

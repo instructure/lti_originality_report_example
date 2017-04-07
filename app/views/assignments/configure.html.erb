@@ -34,7 +34,7 @@
             <input id="setting_one"
                    name="setting_one"
                    type="checkbox"
-                   <%= @settings_one %>>
+                   <%= @settings&.fetch('settings_one') == 'true' ? 'checked' : nil %>>
             Setting one
           </label>
         </div>
@@ -43,7 +43,7 @@
             <input id="setting_two"
                    name="setting_two"
                    type="checkbox"
-                   <%= @settings_two %>>
+                   <%= @settings&.fetch('settings_two') == 'true' ? 'checked' : nil %>>
             Setting two
           </label>
         </div>
