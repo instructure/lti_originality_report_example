@@ -5,10 +5,16 @@ module AssignmentsHelper
 
   def lti_authentication
     if shared_secret.present?
-      authenticator = IMS::LTI::Services::MessageAuthenticator.new(request.url, request.request_parameters, shared_secret)
+      authenticator = IMS::LTI::Services::OAuth1MessageAuthenticator.new(message, shared_secret)
       return true if authenticator.valid_signature? && not_expired?
     end
     head :unauthorized and return
+  end
+
+  def message
+    message = IMS::LTI::Models::Messages::BasicLTILaunchRequest.new(request.request_parameters)
+    message.launch_url = request.url
+    message
   end
 
   def shared_secret
