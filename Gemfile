@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'httparty'
-gem 'ims-lti'
+gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_security'
 gem 'jbuilder', '~> 2.5'
 gem 'json-jwt'
 gem 'pg', '~> 0.18'
@@ -34,4 +34,4 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '~> 3.3.0'
 end
-gem 'tzinfo-data', platforms: %i(mingw mswin x64_mingw jruby)
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
