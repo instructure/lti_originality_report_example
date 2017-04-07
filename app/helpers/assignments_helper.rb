@@ -31,12 +31,12 @@ module AssignmentsHelper
     @_tool_proxy ||= ToolProxy.find_by(guid: params['oauth_consumer_key'])
   end
 
-  def edit_assignment?
-    existing_assignment.present?
-  end
-
   def existing_assignment
     @_existing_assignment ||= Assignment.find_by(lti_assignment_id: params['ext_lti_assignment_id'])
+  end
+
+  def edit_assignment?
+    existing_assignment.present?
   end
 
   def find_or_create_assignment
