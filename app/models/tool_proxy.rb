@@ -1,5 +1,6 @@
 class ToolProxy < ActiveRecord::Base
   validates :guid, :shared_secret, :tcp_url, :base_url, :tp_half_shared_secret, presence: true
+  has_many :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
   ENABLED_CAPABILITY = %w[Security.splitSecret].freeze
@@ -78,22 +79,22 @@ class ToolProxy < ActiveRecord::Base
   # Returns the product info to be used in the tool profile (See section 5.1.2)
   def product_info
     {
-      'product_name' => {
-        'default_value' => 'similarity detection reference tool'
+      product_name: {
+        default_value: 'similarity detection reference tool'
       },
-      'product_version' => '1.0',
-      'description' => {
-        'default_value' => 'LTI 2.1 tool provider reference implementation'
+      product_version: '1.0',
+      description: {
+        default_value: 'LTI 2.1 tool provider reference implementation'
       },
-      'product_family' => {
-        'code' => 'similarity detection reference tool',
-        'vendor' => {
-          'code' => 'Instructure.com',
-          'vendor_name' => {
-            'default_value' => 'Instructure'
+      product_family: {
+        code: 'similarity detection reference tool',
+        vendor: {
+          code: 'Instructure.com',
+          vendor_name: {
+            default_value: 'Instructure'
           },
-          'description' => {
-            'default_value' => 'Canvas Learning Management System'
+          description: {
+            default_value: 'Canvas Learning Management System'
           }
         }
       }
@@ -141,7 +142,7 @@ class ToolProxy < ActiveRecord::Base
   def resource_handler
     IMS::LTI::Models::ResourceHandler.from_json(
       resource_type: { code: 'placements' },
-      resource_name: { default_value: 'lti_example_tool', key: '' },
+      resource_name: { default_value: 'Similarity Detection Tool', key: '' },
       message: message
     )
   end

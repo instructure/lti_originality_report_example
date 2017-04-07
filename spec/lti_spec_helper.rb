@@ -20,6 +20,7 @@ RSpec.shared_context 'lti_spec_helper', shared_context: :metadata do
     }.to_json
   end
   let(:tool_proxy_guid) { '00d97c7d-f163-44aa-9921-c7c186a5e809' }
+  let(:tool_proxy) { ToolProxy.create!(guid: tool_proxy_guid, tcp_url: 'test.com', base_url: 'tc.com', shared_secret: 'secret') }
   let(:tc_half_shared_secret) { '0e5de8345149b53c28e49f1da467f077b6ecf8fd1e29cff9d2bea693105ac353e4742b168ca594f2d0346ebc968454ce57f0a84017b6f4b2d279f08797d66928' }
   let(:tool_consumer_profile) do
     '{
