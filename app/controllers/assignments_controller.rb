@@ -19,6 +19,7 @@ class AssignmentsController < ApplicationController
   # Handles settings changes that happen asynchronously as
   # options from the configure page of this tool are changed by the user.
   def update
+    head :unauthorized and return unless request.origin == request.base_url
     assignment = Assignment.find_by(lti_assignment_id: params[:lti_assignment_id])
     head :not_found and return unless assignment.present?
     assignment.update_attributes(settings: params.require(:settings))

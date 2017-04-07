@@ -29,12 +29,12 @@ RSpec.describe AssignmentsController, type: :controller do
 
     before do
       Assignment.create!(lti_assignment_id: rand_id, tool_proxy: tool_proxy)
+      request.host = nil
     end
 
-    it 'updates settings for the assignment' do
+    it 'rejects requests with a different origin domain than its own' do
       post :update, params: { settings: { some_setting: setting_value }, lti_assignment_id: rand_id }
-      a = Assignment.find_by(lti_assignment_id: rand_id)
-      expect(a.settings['some_setting']).to eq setting_value
+      expect(response).to be_unauthorized
     end
   end
 end
