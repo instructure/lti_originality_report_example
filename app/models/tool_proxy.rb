@@ -54,14 +54,7 @@ class ToolProxy < ActiveRecord::Base
   #
   # Returns the security contract for use in the tool proxy (See section 5.6)
   def security_contract
-    IMS::LTI::Models::SecurityContract.new(
-      tp_half_shared_secret: tp_half_shared_secret,
-      tool_service: [IMS::LTI::Models::RestServiceProfile.new(
-        type: 'RestServiceProfile',
-        service: 'vnd.Canvas.webhooksSubscription',
-        action: %w[POST GET PUT DELETE]
-      )]
-    )
+    IMS::LTI::Models::SecurityContract.new(tp_half_shared_secret: tp_half_shared_secret)
   end
 
   # product_instance
@@ -141,8 +134,8 @@ class ToolProxy < ActiveRecord::Base
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
   def resource_handler
     IMS::LTI::Models::ResourceHandler.from_json(
-      resource_type: { code: 'placements' },
-      resource_name: { default_value: 'Similarity Detection Tool', key: '' },
+      resource_type: {code: 'placements'},
+      resource_name: {default_value: 'Similarity Detection Tool', key: ''},
       message: message
     )
   end
