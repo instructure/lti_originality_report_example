@@ -4,7 +4,7 @@ $(document).ready(function(){
   settingsForm.submit(function(event){
     event.preventDefault();
     $.post(
-      `/assignments/${$('#lti_assignment_id').val()}/update`,
+      '/assignments/' + $('#lti_assignment_id').val() + '/update',
       {
         settings: {
           settings_one: $(this).find('#setting_one').prop('checked'),
