@@ -44,7 +44,8 @@ class ToolProxy < ActiveRecord::Base
       lti_version: 'LTI-2p0',
       product_instance: product_instance,
       resource_handler: [resource_handler],
-      base_url_choice: [base_url_choice]
+      base_url_choice: [base_url_choice],
+      service_offered: service_offered
     )
   end
 
@@ -53,7 +54,12 @@ class ToolProxy < ActiveRecord::Base
   # Returns the security contract for use in the tool proxy (See section 5.6)
   def security_contract
     IMS::LTI::Models::SecurityContract.new(
-      tp_half_shared_secret: tp_half_shared_secret
+      tp_half_shared_secret: tp_half_shared_secret,
+      tool_service: [IMS::LTI::Models::RestServiceProfile.new(
+        type: 'RestServiceProfile',
+        service: 'vnd.Canvas.webhooksSubscription',
+        action: %w(POST GET PUT DELETE)
+      )]
     )
   end
 
@@ -110,7 +116,21 @@ class ToolProxy < ActiveRecord::Base
     [
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
-        path: '/basic-launch'
+        path: '/assignment-configuration',
+        enabled_capability: %w(Canvas.placements.similarityDetection)
+      )
+    ]
+  end
+
+  # service_offered
+  #
+  # Returns a list of services offered by the tool provider.
+  def service_offered
+    [
+      IMS::LTI::Models::RestService.new(
+        id: "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
+        action: %w(POST),
+        endpoint: "/live-events"
       )
     ]
   end
