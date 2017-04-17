@@ -1,6 +1,6 @@
 class AssignmentsController < ApplicationController
   include AssignmentsHelper
-  skip_before_filter :verify_authenticity_token, only: [:configure, :update]
+  skip_before_filter :verify_authenticity_token, only: %i[configure update]
   after_action :allow_iframe, only: :configure
   before_action :lti_authentication, only: :configure
 

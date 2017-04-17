@@ -10,6 +10,7 @@ end
 gem 'httparty'
 gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_security'
 gem 'jbuilder', '~> 2.5'
+gem 'jquery-rails'
 gem 'json-jwt'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
@@ -19,7 +20,6 @@ gem 'redis-rails', '~> 5'
 gem 'sass-rails', ' ~> 5'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
