@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403190431) do
+ActiveRecord::Schema.define(version: 20170417191703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,10 +50,11 @@ ActiveRecord::Schema.define(version: 20170403190431) do
   end
 
   create_table "tool_proxies", force: :cascade do |t|
-    t.string "guid",          null: false
-    t.string "shared_secret", null: false
-    t.string "tcp_url",       null: false
-    t.string "base_url",      null: false
+    t.string "guid",              null: false
+    t.string "shared_secret",     null: false
+    t.string "tcp_url",           null: false
+    t.string "base_url",          null: false
+    t.string "authorization_url"
     t.index ["guid"], name: "index_tool_proxies_on_guid", using: :btree
   end
 
