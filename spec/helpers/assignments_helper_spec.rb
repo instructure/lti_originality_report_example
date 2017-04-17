@@ -4,7 +4,7 @@ require 'lti_spec_helper'
 RSpec.describe AssignmentsHelper,
  type: :helper do
   include_context 'lti_spec_helper'
-  let(:shared_secret) { 'e5bf61debb355e4552732a943c74801ee02bc24ef1d6a077c6e68363fb9dcc4dceab75e6ae4f1e6ae9df5a6892ebbabe49feecc67f00f7e447b43f270e115c590533cd9a176a23eaba334834180da227521884bb49fae1993ca15d52c077b7d37d2ab6fd924a86a285f438f2fc161f63806468d1b977ff120635aa70f9d1d7a5' }
+  let(:secret) { 'e5bf61debb355e4552732a943c74801ee02bc24ef1d6a077c6e68363fb9dcc4dceab75e6ae4f1e6ae9df5a6892ebbabe49feecc67f00f7e447b43f270e115c590533cd9a176a23eaba334834180da227521884bb49fae1993ca15d52c077b7d37d2ab6fd924a86a285f438f2fc161f63806468d1b977ff120635aa70f9d1d7a5' }
   let(:tp_guid) { '6c13a735-7981-48db-b9ff-8d67dfcc4e7c' }
   let(:time_now) { '1491575331' }
   let(:request_parameters) do
@@ -28,7 +28,11 @@ RSpec.describe AssignmentsHelper,
   let(:params) { { 'oauth_consumer_key' => tp_guid } }
 
   before do
-    ToolProxy.create!(shared_secret: shared_secret, guid: tp_guid, tcp_url: 'test.com', base_url: 'base.com')
+    ToolProxy.create!(shared_secret: secret,
+                      guid: tp_guid,
+                      tcp_url: 'test.com',
+                      base_url: 'base.com')
+    allow(controller).to receive(:params).and_return(params)
   end
 
   describe '#lti_authentication' do
@@ -86,7 +90,7 @@ RSpec.describe AssignmentsHelper,
   describe '#edit_assignment?' do
     let(:lti_assignment_id) { SecureRandom.uuid }
     before do
-      allow(helper).to receive(:params) { { 'ext_lti_assignment_id' => lti_assignment_id } }
+      allow(controller).to receive(:params) { { 'ext_lti_assignment_id' => lti_assignment_id }.merge(params) }
     end
 
     it 'returns true if the assignment configuration is being edited' do
@@ -102,7 +106,7 @@ RSpec.describe AssignmentsHelper,
   describe '#find_or_create_assignment' do
     before do
       @lti_assignment_id = SecureRandom.uuid
-      allow(helper).to receive(:params) { { 'ext_lti_assignment_id' => @lti_assignment_id } }
+      allow(controller).to receive(:params) { { 'ext_lti_assignment_id' => @lti_assignment_id }.merge(params) }
     end
 
     it 'returns the assignment if it exists' do
