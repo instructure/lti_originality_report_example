@@ -2,8 +2,9 @@ require 'rails_helper'
 require 'lti_spec_helper'
 
 RSpec.describe AssignmentsHelper,
+include_context 'lti_spec_helper'
+
 type: :helper do
-  include_context 'lti_spec_helper'
   let(:secret) { 'e5bf61debb355e4552732a943c74801ee02bc24ef1d6a077c6e68363fb9dcc4dceab75e6ae4f1e6ae9df5a6892ebbabe49feecc67f00f7e447b43f270e115c590533cd9a176a23eaba334834180da227521884bb49fae1993ca15d52c077b7d37d2ab6fd924a86a285f438f2fc161f63806468d1b977ff120635aa70f9d1d7a5' }
   let(:tp_guid) { '6c13a735-7981-48db-b9ff-8d67dfcc4e7c' }
   let(:time_now) { '1491575331' }
