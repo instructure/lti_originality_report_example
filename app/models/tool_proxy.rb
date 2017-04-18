@@ -124,7 +124,7 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::RestService.new(
         id: "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
         action: %w[POST],
-        endpoint: "#{base_url}/events/submission"
+        endpoint: "#{base_url}/event/submission"
       )
     ]
   end

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     post 'assignments/:lti_assignment_id/update', action: :update, as: :assignment_update
   end
 
-  namespace :events do
+  namespace :event do
     post :submission
   end
 
