@@ -134,8 +134,8 @@ class ToolProxy < ActiveRecord::Base
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
   def resource_handler
     IMS::LTI::Models::ResourceHandler.from_json(
-      resource_type: {code: 'placements'},
-      resource_name: {default_value: 'Similarity Detection Tool', key: ''},
+      resource_type: { code: 'placements' },
+      resource_name: { default_value: 'Similarity Detection Tool', key: '' },
       message: message
     )
   end

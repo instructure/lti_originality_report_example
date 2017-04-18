@@ -5,9 +5,8 @@ RSpec.describe EventController, type: :controller do
   include_context 'lti_spec_helper'
 
   describe '#submission' do
-
-    let(:submission_id) {'30000065089104'}
-    let(:lti_assignment_id) {'899d6635-8f9e-4646-8622-2ed1ec0c951a'}
+    let(:submission_id) { '30000065089104' }
+    let(:lti_assignment_id) { '899d6635-8f9e-4646-8622-2ed1ec0c951a' }
     let(:tool_proxy) do
       ToolProxy.create!(
         guid: SecureRandom.uuid,
@@ -16,7 +15,7 @@ RSpec.describe EventController, type: :controller do
         base_url: 'https://example.com'
       )
     end
-    let!(:assignment) { tool_proxy.assignments.create!( lti_assignment_id: lti_assignment_id ) }
+    let!(:assignment) { tool_proxy.assignments.create!(lti_assignment_id: lti_assignment_id) }
 
     let(:webhook) do
       {
@@ -61,7 +60,5 @@ RSpec.describe EventController, type: :controller do
       post :submission, body: webhook.to_json, format: :json
       expect(Submission.find_by(tc_id: submission_id)).to_not be nil
     end
-
   end
-
 end
