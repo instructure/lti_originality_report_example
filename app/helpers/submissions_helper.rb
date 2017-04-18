@@ -2,10 +2,8 @@ module SubmissionsHelper
   include LtiAuthorizationHelper
 
   def retrieve_submission
-    response = HTTParty.get("http://canvas.docker/api/lti/assignments/:assignment_id/submissions/#{params[:tc_submission_id]}",
-                            headers: {
-                              'Authorization' => "Bearer #{access_token}"
-                            })
-    response.body
+    url = "#{tool_proxy.base_tc_url}/api/lti/assignments/:assignment_id/submissions/#{params[:tc_submission_id]}"
+    response = HTTParty.get(url, headers: { 'Authorization' => "Bearer #{access_token}" } )
+    JSON.parse(response.body)
   end
 end

@@ -3,7 +3,7 @@ class ToolProxy < ActiveRecord::Base
   has_many :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
-  ENABLED_CAPABILITY = %w[Security.splitSecret].freeze
+  ENABLED_CAPABILITY = %w[Security.splitSecret Canvas.placements.similarityDetection].freeze
   REQUIRED_CAPABILITIES = %w[Canvas.placements.similarityDetection].freeze
 
   # to_json
@@ -33,6 +33,11 @@ class ToolProxy < ActiveRecord::Base
       tool_profile: tool_profile,
       enabled_capability: ENABLED_CAPABILITY
     )
+  end
+
+  def base_tc_url
+    url = URI.parse(authorization_url)
+    "#{url.scheme}://#{url.host}"
   end
 
   private
@@ -123,7 +128,7 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
         path: '/assignments/configure',
-        enabled_capability: %w[Canvas.placements.similarityDetection Canvas.placements.similarityDetection]
+        enabled_capability: %w[Canvas.placements.similarityDetection]
       )
     ]
   end
