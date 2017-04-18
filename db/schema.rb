@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403190431) do
+ActiveRecord::Schema.define(version: 20170418202352) do
 
   create_table "assignments", force: :cascade do |t|
     t.string   "lti_assignment_id", null: false
@@ -23,24 +23,24 @@ ActiveRecord::Schema.define(version: 20170403190431) do
   end
 
   create_table "originality_reports", force: :cascade do |t|
-    t.integer  "tc_id",                      null: false
-    t.integer  "file_id",                    null: false
-    t.float    "originality_score",          null: false
-    t.integer  "submission_id",              null: false
+    t.integer  "tc_id",                      limit: 8, null: false
+    t.integer  "file_id",                              null: false
+    t.float    "originality_score",                    null: false
+    t.integer  "submission_id",                        null: false
     t.integer  "originality_report_file_id"
     t.string   "originality_report_url"
     t.string   "originality_report_lti_url"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.index ["submission_id"], name: "index_originality_reports_on_submission_id"
     t.index ["tc_id"], name: "index_originality_reports_on_tc_id"
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "tc_id",         null: false
-    t.integer  "assignment_id", null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "tc_id",         limit: 8, null: false
+    t.integer  "assignment_id",           null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["assignment_id"], name: "index_submissions_on_assignment_id"
     t.index ["tc_id"], name: "index_submissions_on_tc_id"
   end
