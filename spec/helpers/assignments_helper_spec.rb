@@ -41,15 +41,15 @@ RSpec.describe AssignmentsHelper, type: :helper do
 
     it 'returns the assignment if it exists' do
       a = Assignment.create!(tool_proxy: ToolProxy.last, lti_assignment_id: @lti_assignment_id)
-      expect(helper.find_or_create_assignment).to eq a
+      expect(helper.find_or_create_assignment(tool_proxy: tool_proxy)).to eq a
     end
 
     it 'correctly sets the lti_assignent_id when creating an assignment' do
-      expect(helper.find_or_create_assignment.lti_assignment_id).to eq @lti_assignment_id
+      expect(helper.find_or_create_assignment(tool_proxy: tool_proxy).lti_assignment_id).to eq @lti_assignment_id
     end
 
     it 'associates the assignment with a tool proxy' do
-      expect(helper.find_or_create_assignment.tool_proxy.guid).to eq tp_guid
+      expect(helper.find_or_create_assignment(tool_proxy: tp).tool_proxy.guid).to eq tp_guid
     end
   end
 end
