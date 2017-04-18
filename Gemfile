@@ -8,6 +8,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'httparty'
 gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_security'
 gem 'jbuilder', '~> 2.5'
