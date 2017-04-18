@@ -10,6 +10,7 @@ end
 gem 'httparty'
 gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_security'
 gem 'jbuilder', '~> 2.5'
+gem 'jquery-rails'
 gem 'json-jwt'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
@@ -25,6 +26,10 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'rubocop', require: false
   gem 'sqlite3'
+end
+
+group :test do
+  gem 'database_cleaner'
 end
 
 group :development do

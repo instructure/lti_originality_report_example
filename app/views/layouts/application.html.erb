@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <%= javascript_include_tag 'application' %>
+  <%= yield :javascripts %>
+</head>
+<body>
+  <main id="content" class="container">
+    <%= yield %>
+  </main>
+</body>
+</html>
