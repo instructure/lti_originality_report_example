@@ -21,9 +21,9 @@ module AssignmentsHelper
   # and returns a new assignment if none is found
   def find_or_create_assignment(tool_proxy:)
     @_assignment ||= begin
-      return existing_assignment if existing_assignment.present?
-      Assignment.create!(lti_assignment_id: params['ext_lti_assignment_id'],
-                         tool_proxy: tool_proxy)
+      assignment = Assignment.find_or_initialize_by(lti_assignment_id: params['ext_lti_assignment_id'])
+      assignment.update_attributes!(tool_proxy: tool_proxy)
+      assignment
     end
   end
 end
