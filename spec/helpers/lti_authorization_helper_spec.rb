@@ -54,9 +54,9 @@ RSpec.describe LtiAuthorizationHelper, type: :helper do
     end
   end
 
-  describe '#tool_proxy_from_params' do
+  describe '#tool_proxy_from_guid' do
     it 'finds the tool proxy identified by the guid in params' do
-      expect(helper.tool_proxy_from_params).to eq @tp
+      expect(helper.tool_proxy_from_guid).to eq @tp
     end
   end
 end
