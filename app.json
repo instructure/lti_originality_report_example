@@ -1,0 +1,6 @@
+{
+  "name": "LTI Originality Example",
+  "description": "A example implimentation of the Canvas Originality Report Framework",
+  "repository": "https://github.com/instructure/lti_originality_report_example",
+  "keywords": ["lti", "ruby", "reference", "example"]
+}
