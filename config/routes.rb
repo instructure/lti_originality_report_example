@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   scope(controller: :submission) do
-    get 'submission/index', action: :index
+    post 'submission/index', action: :index
   end
 
   namespace :event do
