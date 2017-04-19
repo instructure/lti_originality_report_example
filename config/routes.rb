@@ -15,4 +15,8 @@ Rails.application.routes.draw do
         action: :retrieve_and_store, as: :submission_retrival
     get 'submissions', action: :index, as: :submission_index
   end
+
+  namespace :event do
+    post :submission
+  end
 end
