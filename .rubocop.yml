@@ -43,6 +43,7 @@ Style/ClassAndModuleChildren:
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     default: ()
+    %w:      ()
 
 Metrics/LineLength:
   # Change the default 80 chars limit value
