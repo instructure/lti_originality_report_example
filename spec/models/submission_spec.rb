@@ -15,4 +15,8 @@ RSpec.describe Submission, type: :model do
   it 'has many originality report' do
     expect { submission.originality_reports << originality_report }.not_to raise_exception
   end
+
+  it 'has a tool proxy' do
+    expect { submission.tool_proxy }.not_to raise_exception
+  end
 end
