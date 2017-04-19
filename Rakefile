@@ -7,9 +7,9 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
-if %w[test development].include? Rails.env
+if %w(test development).include? Rails.env
   require 'rubocop/rake_task'
   RuboCop::RakeTask.new(:rubocop) do |t|
-    t.options = %w[--force-exclusion]
+    t.options = %w(--force-exclusion)
   end
 end
