@@ -18,7 +18,7 @@ RSpec.describe SubmissionsHelper, type: :helper do
     let(:submission_data) { { 'id' => 1, 'assignment_id' => 2 } }
 
     before do
-      allow(HTTParty).to receive(:get) { double(body: submission_data.to_json ) }
+      allow(HTTParty).to receive(:get) { double(body: submission_data.to_json) }
       allow(helper).to receive(:access_token) { access_token }
       allow(controller).to receive(:params).and_return(params)
     end

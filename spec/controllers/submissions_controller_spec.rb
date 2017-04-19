@@ -2,13 +2,12 @@ require 'rails_helper'
 
 RSpec.describe SubmissionsController, type: :controller do
   describe '#retrieve_and_store' do
-
     let(:lti_assignment_id) { SecureRandom.uuid }
     let(:tp_guid) { SecureRandom.uuid }
     let(:submission_id) { 2342 }
     let(:random_access_token) { SecureRandom.uuid }
     let(:assignment_tc_id) { 34 }
-    let(:attachments) { [ { 'attachment_id' => 1, 'filename' => 'filename' } ] }
+    let(:attachments) { [{ 'attachment_id' => 1, 'filename' => 'filename' }] }
     let(:submission_data) do
       {
         'id' => submission_id,
@@ -30,7 +29,7 @@ RSpec.describe SubmissionsController, type: :controller do
     end
 
     before do
-      allow(HTTParty).to receive(:get) { double(body: submission_data.to_json ) }
+      allow(HTTParty).to receive(:get) { double(body: submission_data.to_json) }
       allow_any_instance_of(IMS::LTI::Services::AuthenticationService).to receive(:access_token) { random_access_token }
       @assignment = Assignment.create!(lti_assignment_id: lti_assignment_id, tool_proxy: tool_proxy)
     end
@@ -58,7 +57,7 @@ RSpec.describe SubmissionsController, type: :controller do
     it 'returns 404 if the submission is not found in Canvas' do
       params[:tc_submission_id] = 23
       Submission.create!(assignment: @assignment, tc_id: 23)
-      allow(HTTParty).to receive(:get) { double(body: {}.to_json ) }
+      allow(HTTParty).to receive(:get) { double(body: {}.to_json) }
       get :retrieve_and_store, params: params
       expect(response).to be_not_found
     end

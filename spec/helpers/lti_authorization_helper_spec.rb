@@ -21,11 +21,13 @@ RSpec.describe LtiAuthorizationHelper, type: :helper do
   before do
     allow(controller).to receive(:params).and_return(params)
     allow_any_instance_of(IMS::LTI::Services::AuthenticationService).to receive(:access_token) { random_access_token }
-    @tp = ToolProxy.create!(guid: tp_guid,
-                      shared_secret: secret,
-                      tcp_url: 'tcp-url',
-                      base_url: 'base-url',
-                      authorization_url: auth_url)
+    @tp = ToolProxy.create!(
+      guid: tp_guid,
+      shared_secret: secret,
+      tcp_url: 'tcp-url',
+      base_url: 'base-url',
+      authorization_url: auth_url
+    )
   end
 
   describe '#access_token' do
@@ -57,5 +59,4 @@ RSpec.describe LtiAuthorizationHelper, type: :helper do
       expect(helper.tool_proxy_from_params).to eq @tp
     end
   end
-
 end
