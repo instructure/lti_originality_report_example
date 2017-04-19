@@ -7,7 +7,15 @@ RSpec.describe SubmissionsController, type: :controller do
     let(:tp_guid) { SecureRandom.uuid }
     let(:submission_id) { 2342 }
     let(:random_access_token) { SecureRandom.uuid }
-    let(:submission_data) { { 'id' => submission_id, 'assignment_id' => 2 } }
+    let(:assignment_tc_id) { 34 }
+    let(:attachments) { [ { 'attachment_id' => 1, 'filename' => 'filename' } ] }
+    let(:submission_data) do
+      {
+        'id' => submission_id,
+        'assignment_id' => assignment_tc_id,
+        'attachments' => attachments
+      }
+    end
     let(:tool_proxy) do
       ToolProxy.create!(guid: tp_guid,
                         shared_secret: 'secret',
@@ -17,7 +25,6 @@ RSpec.describe SubmissionsController, type: :controller do
     end
     let(:params) do
       {
-        lti_assignment_id: lti_assignment_id,
         tool_proxy_guid: tp_guid
       }
     end
@@ -28,43 +35,39 @@ RSpec.describe SubmissionsController, type: :controller do
       @assignment = Assignment.create!(lti_assignment_id: lti_assignment_id, tool_proxy: tool_proxy)
     end
 
-    it 'retrieves submissions from the tool consumer' do
+    it 'sets the submissions attachment data' do
       params[:tc_submission_id] = 1
+      s = Submission.create!(assignment: @assignment, tc_id: 1)
       get :retrieve_and_store, params: params
-      expect(Submission.find_by(tc_id: submission_id)).not_to be_blank
+      expect(Submission.find(s.id).attachments).to eq attachments
     end
 
-    it 'returns 404 if the assignment is not found' do
+    it "sets the submission's assignment 'tc_id'" do
       params[:tc_submission_id] = 1
-      Assignment.delete_all
+      s = Submission.create!(assignment: @assignment, tc_id: 1)
+      get :retrieve_and_store, params: params
+      expect(Submission.find(s.id).assignment.tc_id).to eq assignment_tc_id
+    end
+
+    it 'returns 404 if the submission is not found' do
+      params[:tc_submission_id] = Submission.count + 1
       get :retrieve_and_store, params: params
       expect(response).to be_not_found
     end
 
     it 'returns 404 if the submission is not found in Canvas' do
-      allow(HTTParty).to receive(:get) { double(body: {} ) }
-    end
-
-    it 'creates a submission if one does not exist' do
-      submission_count = Submission.count
-      params[:tc_submission_id] = submission_count + 1
+      params[:tc_submission_id] = 23
+      Submission.create!(assignment: @assignment, tc_id: 23)
+      allow(HTTParty).to receive(:get) { double(body: {}.to_json ) }
       get :retrieve_and_store, params: params
-      expect(Submission.count).to eq submission_count + 1
+      expect(response).to be_not_found
     end
 
-    it 'looks up the submission if it already exists' do
+    it 'looks up the submission if it exists' do
       params[:tc_submission_id] = 23
       s = Submission.create!(assignment: @assignment, tc_id: 23)
       get :retrieve_and_store, params: params
-      expect(response.body).to eq s.to_json
-    end
-
-    it 'does not create another submission if it already exists' do
-      params[:tc_submission_id] = 23
-      Submission.create!(assignment: @assignment, tc_id: 23)
-      submission_count = Submission.count
-      get :retrieve_and_store, params: params
-      expect(Submission.count).to eq submission_count
+      expect(JSON.parse(response.body)['id']).to eq s.id
     end
   end
 end
