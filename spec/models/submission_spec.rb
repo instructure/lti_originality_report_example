@@ -12,7 +12,7 @@ RSpec.describe Submission, type: :model do
     expect { submission.update_attributes!(assignment: nil) }.to raise_exception(ActiveRecord::RecordInvalid)
   end
 
-  it 'has one originality report' do
-    expect { submission.originality_report = originality_report }.not_to raise_exception
+  it 'has many originality report' do
+    expect { submission.originality_reports << originality_report }.not_to raise_exception
   end
 end

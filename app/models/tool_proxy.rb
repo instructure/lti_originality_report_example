@@ -4,8 +4,8 @@ class ToolProxy < ActiveRecord::Base
   has_many :submissions, through: :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
-  ENABLED_CAPABILITY = %w[Security.splitSecret].freeze
-  REQUIRED_CAPABILITIES = %w[Canvas.placements.similarityDetection].freeze
+  ENABLED_CAPABILITY = %w(Security.splitSecret Canvas.placements.similarityDetection).freeze
+  REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
 
   # to_json
   #
@@ -36,6 +36,11 @@ class ToolProxy < ActiveRecord::Base
     )
   end
 
+  def base_tc_url
+    url = URI.parse(authorization_url)
+    "#{url.scheme}://#{url.host}"
+  end
+
   private
 
   # tool_profile
@@ -55,7 +60,21 @@ class ToolProxy < ActiveRecord::Base
   #
   # Returns the security contract for use in the tool proxy (See section 5.6)
   def security_contract
-    IMS::LTI::Models::SecurityContract.new(tp_half_shared_secret: tp_half_shared_secret)
+    IMS::LTI::Models::SecurityContract.new(
+      tp_half_shared_secret: tp_half_shared_secret,
+      tool_service: [
+        IMS::LTI::Models::RestServiceProfile.new(
+          type: 'RestServiceProfile',
+          service: 'vnd.Canvas.webhooksSubscription',
+          action: %w(POST GET PUT DELETE)
+        ),
+        IMS::LTI::Models::RestServiceProfile.new(
+          type: 'RestServiceProfile',
+          service: 'vnd.Canvas.submission',
+          action: %w(GET)
+        )
+      ]
+    )
   end
 
   # product_instance
@@ -112,7 +131,7 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
         path: '/assignments/configure',
-        enabled_capability: %w[Canvas.placements.similarityDetection]
+        enabled_capability: %w(Canvas.placements.similarityDetection)
       )
     ]
   end
@@ -122,7 +141,7 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
         path: '/submission/index',
-        enabled_capability: %w[Canvas.placements.accountNavigation Canvas.placements.courseNavigation]
+        enabled_capability: %w(Canvas.placements.accountNavigation Canvas.placements.courseNavigation)
       )
     ]
   end
@@ -134,7 +153,7 @@ class ToolProxy < ActiveRecord::Base
     [
       IMS::LTI::Models::RestService.new(
         id: "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
-        action: %w[POST],
+        action: %w(POST),
         endpoint: "#{base_url}/event/submission"
       )
     ]

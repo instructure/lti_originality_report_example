@@ -1,4 +1,8 @@
 module RegistrationHelper
+  def tool_consumer_profile
+    @_tool_consumer_profile ||= tool_proxy_registration_service.tool_consumer_profile
+  end
+
   def registration_request
     @_registration_request ||= begin
       reg_request = IMS::LTI::Models::Messages::RegistrationRequest.new(request.request_parameters)
@@ -33,6 +37,10 @@ module RegistrationHelper
       return tool_proxy.update_attributes(guid: tp_response.tool_proxy_guid, shared_secret: shared_secret)
     end
     false
+  end
+
+  def authorization_service
+    tool_consumer_profile.services_offered.find { |s| s.id.end_with? '#vnd.Canvas.authorization' }
   end
 
   def registration_success_url(tp_guid)

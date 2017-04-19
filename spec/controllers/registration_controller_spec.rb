@@ -32,6 +32,11 @@ RSpec.describe RegistrationController, type: :controller do
       expect(ToolProxy.count).to eq prev_count + 1
     end
 
+    it 'saves the authorization url' do
+      post :register, params: registration_message
+      expect(ToolProxy.last.authorization_url).to eq 'http://canvas.docker/api/lti/courses/2/authorize'
+    end
+
     it 'assembles both halves of the shared secret' do
       post :register, params: registration_message
       tp = ToolProxy.last
@@ -40,7 +45,7 @@ RSpec.describe RegistrationController, type: :controller do
 
     it 'redirects with status set to failure if required capabilities are missing' do
       prev_capabilities = ToolProxy::REQUIRED_CAPABILITIES
-      ToolProxy::REQUIRED_CAPABILITIES = %w[Capaability.not.Offered].freeze
+      ToolProxy::REQUIRED_CAPABILITIES = %w(Capaability.not.Offered).freeze
       post :register, params: registration_message
       expect(response).to redirect_to  'http://canvas.docker/courses/2/lti/registration_return?status=failure&lti_errormsg=Missing%20required%20capabilities'
       ToolProxy::REQUIRED_CAPABILITIES = prev_capabilities
