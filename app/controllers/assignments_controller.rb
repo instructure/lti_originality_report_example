@@ -1,5 +1,6 @@
 class AssignmentsController < ApplicationController
   include AssignmentsHelper
+  include LtiHelper
   skip_before_filter :verify_authenticity_token, only: %i[configure update]
   after_action :allow_iframe, only: :configure
   before_action :lti_authentication, only: :configure
@@ -10,7 +11,7 @@ class AssignmentsController < ApplicationController
   # page of Canvas.
   def configure
     @editing = edit_assignment?
-    assignment = find_or_create_assignment
+    assignment = find_or_create_assignment(tool_proxy: tool_proxy)
     @settings = assignment.settings
   end
 
