@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20170418202352) do
     t.integer  "tool_proxy_id",     null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.         "settings"
+    t.hstore   "settings"
     t.index ["lti_assignment_id"], name: "index_assignments_on_lti_assignment_id"
     t.index ["tool_proxy_id"], name: "index_assignments_on_tool_proxy_id"
   end
