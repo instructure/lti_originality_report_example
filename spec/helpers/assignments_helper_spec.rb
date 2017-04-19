@@ -44,6 +44,18 @@ RSpec.describe AssignmentsHelper, type: :helper do
       expect(helper.find_or_create_assignment(tool_proxy: tool_proxy)).to eq a
     end
 
+    it 'updates the tool proxy associated with the assignment' do
+      tp = ToolProxy.create!(
+        shared_secret: secret,
+        guid: SecureRandom.uuid,
+        tcp_url: 'test.com',
+        base_url: 'base.com'
+      )
+      a = Assignment.create!(tool_proxy: tool_proxy, lti_assignment_id: @lti_assignment_id)
+      helper.find_or_create_assignment(tool_proxy: tp)
+      expect(a.reload.tool_proxy).to eq tp
+    end
+
     it 'correctly sets the lti_assignent_id when creating an assignment' do
       expect(helper.find_or_create_assignment(tool_proxy: tool_proxy).lti_assignment_id).to eq @lti_assignment_id
     end
