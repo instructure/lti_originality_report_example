@@ -5,10 +5,6 @@
 class SubmissionsController < ApplicationController
   include SubmissionsHelper
 
-  def index
-    @submissions = Submission.all
-  end
-
   def retrieve_and_store
     # Get the submission
     submission = Submission.find_by(tc_id: params['tc_submission_id'])

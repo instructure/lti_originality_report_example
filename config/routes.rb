@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   scope(controller: :submissions) do
     get 'tool_proxy/:tool_proxy_guid/submissions/:tc_submission_id/retrieve',
         action: :retrieve_and_store, as: :submission_retrival
-    get 'submissions', action: :index, as: :submission_index
   end
 
   namespace :event do
