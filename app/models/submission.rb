@@ -3,5 +3,5 @@ class Submission < ApplicationRecord
   belongs_to :assignment
   has_many :originality_reports
   serialize :attachments, Array
-  has_one :tool_proxy, through: :assignments
+  has_one :tool_proxy, through: :assignment
 end
