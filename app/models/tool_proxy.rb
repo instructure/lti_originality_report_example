@@ -1,6 +1,7 @@
 class ToolProxy < ActiveRecord::Base
   validates :guid, :shared_secret, :tcp_url, :base_url, :tp_half_shared_secret, presence: true
   has_many :assignments
+  has_many :submissions, through: :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
   ENABLED_CAPABILITY = %w[Security.splitSecret].freeze
@@ -44,7 +45,7 @@ class ToolProxy < ActiveRecord::Base
     IMS::LTI::Models::ToolProfile.new(
       lti_version: 'LTI-2p0',
       product_instance: product_instance,
-      resource_handler: [resource_handler],
+      resource_handler: resource_handlers,
       base_url_choice: [base_url_choice],
       service_offered: service_offered
     )
@@ -106,12 +107,22 @@ class ToolProxy < ActiveRecord::Base
     )
   end
 
-  def message
+  def assignment_message
     [
       IMS::LTI::Models::MessageHandler.new(
         message_type: 'basic-lti-launch-request',
         path: '/assignments/configure',
         enabled_capability: %w[Canvas.placements.similarityDetection]
+      )
+    ]
+  end
+
+  def submissions_message
+    [
+      IMS::LTI::Models::MessageHandler.new(
+        message_type: 'basic-lti-launch-request',
+        path: '/submission/index',
+        enabled_capability: %w[Canvas.placements.accountNavigation Canvas.placements.courseNavigation]
       )
     ]
   end
@@ -129,14 +140,21 @@ class ToolProxy < ActiveRecord::Base
     ]
   end
 
-  # resource_handler
+  # resource_handlers
   #
   # Returns the resource handler to be used in the tool profile (See section 5.4.2)
-  def resource_handler
-    IMS::LTI::Models::ResourceHandler.from_json(
-      resource_type: { code: 'placements' },
-      resource_name: { default_value: 'Similarity Detection Tool', key: '' },
-      message: message
-    )
+  def resource_handlers
+    [
+      IMS::LTI::Models::ResourceHandler.from_json(
+        resource_type: { code: 'sumbissions' },
+        resource_name: { default_value: 'Similarity Detection Tool', key: '' },
+        message: submissions_message
+      ),
+      IMS::LTI::Models::ResourceHandler.from_json(
+        resource_type: { code: 'placements' },
+        resource_name: { default_value: 'Similarity Detection Tool', key: '' },
+        message: assignment_message
+      )
+    ]
   end
 end
