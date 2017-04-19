@@ -54,14 +54,7 @@ class ToolProxy < ActiveRecord::Base
   #
   # Returns the security contract for use in the tool proxy (See section 5.6)
   def security_contract
-    IMS::LTI::Models::SecurityContract.new(
-      tp_half_shared_secret: tp_half_shared_secret,
-      tool_service: [IMS::LTI::Models::RestServiceProfile.new(
-        type: 'RestServiceProfile',
-        service: 'vnd.Canvas.webhooksSubscription',
-        action: %w[POST GET PUT DELETE]
-      )]
-    )
+    IMS::LTI::Models::SecurityContract.new(tp_half_shared_secret: tp_half_shared_secret)
   end
 
   # product_instance
@@ -131,7 +124,7 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::RestService.new(
         id: "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
         action: %w[POST],
-        endpoint: '/live-events'
+        endpoint: "#{base_url}/event/submission"
       )
     ]
   end

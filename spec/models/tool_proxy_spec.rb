@@ -69,7 +69,7 @@ RSpec.describe ToolProxy, type: :model do
 
       it "correctly sets the 'vnd.Canvas.SubmissionEvent' service endpoint" do
         service = tool_profile['service_offered'].first
-        expect(service['endpoint']).to eq '/live-events'
+        expect(service['endpoint']).to eq 'http://www.test.com/event/submission'
       end
     end
 
@@ -78,10 +78,6 @@ RSpec.describe ToolProxy, type: :model do
 
       it "includes 'tp_half_shared_secret' of length 128" do
         expect(security_contract['tp_half_shared_secret'].length).to eq 128
-      end
-
-      it 'uses the originality reports service' do
-        expect(security_contract['tool_service'].first['service']).to eq 'vnd.Canvas.webhooksSubscription'
       end
     end
   end
