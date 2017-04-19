@@ -10,9 +10,10 @@ Rails.application.routes.draw do
     post 'assignments/:lti_assignment_id/update', action: :update, as: :assignment_update
   end
 
-  scope(controller: :submissions) do
+  scope(controller: :submission) do
     get 'tool_proxy/:tool_proxy_guid/submissions/:tc_submission_id/retrieve',
         action: :retrieve_and_store, as: :submission_retrival
+    post 'submission/index', action: :index
   end
 
   namespace :event do

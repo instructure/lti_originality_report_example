@@ -7,7 +7,8 @@ class RegistrationController < ApplicationController
   include RegistrationHelper
 
   def register
-    tcp = tool_consumer_profile
+    tcp = tool_proxy_registration_service.tool_consumer_profile
+    logger.debug(tcp.as_json)
 
     unless tcp.supports_capabilities?(*ToolProxy::REQUIRED_CAPABILITIES)
       redirect_to registration_failure_url('Missing required capabilities') and return
