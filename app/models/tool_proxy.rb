@@ -4,8 +4,8 @@ class ToolProxy < ActiveRecord::Base
   has_many :submissions, through: :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
-  ENABLED_CAPABILITY = %w[Security.splitSecret].freeze
-  REQUIRED_CAPABILITIES = %w[Canvas.placements.similarityDetection].freeze
+  ENABLED_CAPABILITY = %w(Security.splitSecret).freeze
+  REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
 
   # to_json
   #
@@ -122,7 +122,7 @@ class ToolProxy < ActiveRecord::Base
     [
       IMS::LTI::Models::RestService.new(
         id: "#{base_url}/lti/v2/services#vnd.Canvas.SubmissionEvent",
-        action: %w[POST],
+        action: %w(POST),
         endpoint: "#{base_url}/event/submission"
       )
     ]
@@ -138,7 +138,7 @@ class ToolProxy < ActiveRecord::Base
         resource_name: { default_value: 'Similarity Detection Tool', key: '' },
         message: [basic_message(
           path: '/submission/index',
-          enabled_capability: %w[Canvas.placements.accountNavigation Canvas.placements.courseNavigation]
+          capabilities: %w(Canvas.placements.accountNavigation Canvas.placements.courseNavigation)
         )]
       ),
       IMS::LTI::Models::ResourceHandler.from_json(
@@ -146,7 +146,7 @@ class ToolProxy < ActiveRecord::Base
         resource_name: { default_value: 'Similarity Detection Tool', key: '' },
         message: [basic_message(
           path: '/assignments/configure',
-          enabled_capability: %w[Canvas.placements.similarityDetection]
+          capabilities: %w(Canvas.placements.similarityDetection)
         )]
       )
     ]
