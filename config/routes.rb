@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     post 'assignments/:lti_assignment_id/update', action: :update, as: :assignment_update
   end
 
+  scope(controller: :submission) do
+    post 'submission/index', action: :index
+  end
+
   namespace :event do
     post :submission
   end
