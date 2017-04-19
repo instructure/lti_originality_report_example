@@ -29,21 +29,21 @@ ActiveRecord::Schema.define(version: 20170419140504) do
   end
 
   create_table "originality_reports", force: :cascade do |t|
-    t.integer  "tc_id",                      limit: 8, null: false
-    t.integer  "file_id",                              null: false
-    t.float    "originality_score",                    null: false
-    t.integer  "submission_id",                        null: false
+    t.bigint   "tc_id",                      null: false
+    t.integer  "file_id",                    null: false
+    t.float    "originality_score",          null: false
+    t.integer  "submission_id",              null: false
     t.integer  "originality_report_file_id"
     t.string   "originality_report_url"
     t.string   "originality_report_lti_url"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.index ["submission_id"], name: "index_originality_reports_on_submission_id"
-    t.index ["tc_id"], name: "index_originality_reports_on_tc_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["submission_id"], name: "index_originality_reports_on_submission_id", using: :btree
+    t.index ["tc_id"], name: "index_originality_reports_on_tc_id", using: :btree
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "tc_id",         null: false
+    t.bigint   "tc_id",         null: false
     t.integer  "assignment_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -61,4 +61,7 @@ ActiveRecord::Schema.define(version: 20170419140504) do
     t.index ["guid"], name: "index_tool_proxies_on_guid", using: :btree
   end
 
+  add_foreign_key "assignments", "tool_proxies"
+  add_foreign_key "originality_reports", "submissions"
+  add_foreign_key "submissions", "assignments"
 end
