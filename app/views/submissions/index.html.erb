@@ -21,6 +21,7 @@
       <th>Created At</th>
       <th>Updated At</th>
       <th>Attachments</th>
+      <th>Originality Score</th>
     </tr>
     </thead>
     <tbody>
@@ -37,6 +38,9 @@
           </div>
         </td>
         <td>
+          <%= sub.originality_reports.last&.originality_score  %>
+        </td>
+        <td>
           <button type="button"
                   class="btn btn-outline-primary get-submission"
                   data-tp-guid="<%= sub.tool_proxy.guid %>"
@@ -46,9 +50,9 @@
           </button>
           <% if sub.attachments.present? %>
             <button type="button"
-                    class="btn btn-outline-success"
-                    data-tp-guid="<%= sub.tool_proxy.guid %>"
-                    data-tc-id="<%= sub.tc_id %>"
+                    class="btn btn-outline-success create-report"
+                    data-subject-tc-id="<%= sub.tc_id %>"
+                    data-assignment-tc-id="<%= sub.assignment.tc_id %>"
                     style="width:100%;margin-top:5px;">
               Create Report
             </button>

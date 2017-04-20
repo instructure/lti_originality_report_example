@@ -12,5 +12,20 @@ $(document).ready(function(){
         $('#submission-index-alert').show();
       }
     );
-  })
+  });
+
+  $('button.create-report').click(function(e){
+    var button = e.currentTarget
+    $.post(
+      '/assignments/' + button.getAttribute('data-assignment-tc-id') +
+      '/submissions/' + button.getAttribute('data-subject-tc-id') +
+      '/originality_report',
+      {},
+      function(data, status){
+        console.log(status);
+        console.log(data);
+        $('#submission-index-alert').show();
+      }
+    );
+  });
 });
