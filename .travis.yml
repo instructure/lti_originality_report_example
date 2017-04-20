@@ -1,6 +1,13 @@
+sudo: required
 language: ruby
+services:
+  - docker
 rvm:
   - 2.4.1
+
+before_install:
+  - docker build -t instructure/lti_originality_report_example .
+
 before_script:
   - RACK_ENV=test bundle exec rake db:create
 script:
