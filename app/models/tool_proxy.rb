@@ -126,24 +126,12 @@ class ToolProxy < ActiveRecord::Base
     )
   end
 
-  def assignment_message
-    [
-      IMS::LTI::Models::MessageHandler.new(
-        message_type: 'basic-lti-launch-request',
-        path: '/assignments/configure',
-        enabled_capability: %w(Canvas.placements.similarityDetection)
-      )
-    ]
-  end
-
-  def submissions_message
-    [
-      IMS::LTI::Models::MessageHandler.new(
-        message_type: 'basic-lti-launch-request',
-        path: '/submission/index',
-        enabled_capability: %w(Canvas.placements.accountNavigation Canvas.placements.courseNavigation)
-      )
-    ]
+  def basic_message(path:, capabilities:)
+    IMS::LTI::Models::MessageHandler.new(
+      message_type: 'basic-lti-launch-request',
+      path: path,
+      enabled_capability: capabilities
+    )
   end
 
   # service_offered
@@ -167,12 +155,18 @@ class ToolProxy < ActiveRecord::Base
       IMS::LTI::Models::ResourceHandler.from_json(
         resource_type: { code: 'sumbissions' },
         resource_name: { default_value: 'Similarity Detection Tool', key: '' },
-        message: submissions_message
+        message: [basic_message(
+          path: '/submission/index',
+          capabilities: %w(Canvas.placements.accountNavigation Canvas.placements.courseNavigation)
+        )]
       ),
       IMS::LTI::Models::ResourceHandler.from_json(
         resource_type: { code: 'placements' },
         resource_name: { default_value: 'Similarity Detection Tool', key: '' },
-        message: assignment_message
+        message: [basic_message(
+          path: '/assignments/configure',
+          capabilities: %w(Canvas.placements.similarityDetection)
+        )]
       )
     ]
   end
