@@ -69,12 +69,6 @@ RSpec.describe SubmissionsController, type: :controller do
       expect(Submission.find(s.id).assignment.tc_id).to eq assignment_tc_id
     end
 
-    it 'returns 404 if the submission is not found' do
-      params[:tc_submission_id] = Submission.count + 1
-      get :retrieve_and_store, params: params
-      expect(response).to be_not_found
-    end
-
     it 'returns 404 if the submission is not found in Canvas' do
       params[:tc_submission_id] = 23
       Submission.create!(assignment: @assignment, tc_id: 23)
