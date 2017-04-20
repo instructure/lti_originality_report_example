@@ -1,5 +1,10 @@
 $(document).ready(function(){
   $('#submission-index-alert').hide();
+
+  function showStatus() {
+    $('#submission-index-alert').show();
+  }
+
   $('button.get-submission').click(function(e){
     var button = e.currentTarget
     $.get(
@@ -9,7 +14,7 @@ $(document).ready(function(){
       function(data, status){
         console.log(status);
         console.log(data);
-        $('#submission-index-alert').show();
+        showStatus();
       }
     );
   });
@@ -28,7 +33,7 @@ $(document).ready(function(){
       function(data, status){
         console.log(status);
         console.log(data);
-        $('#submission-index-alert').show();
+        showStatus();
       }
     );
   });

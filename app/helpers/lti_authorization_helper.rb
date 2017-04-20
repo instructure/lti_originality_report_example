@@ -38,6 +38,6 @@ module LtiAuthorizationHelper
   #
   # Returns the ToolProxy specified in the request
   def authorization_header
-    {'Authorization' => "Bearer #{access_token}"}
+    { 'Authorization' => "Bearer #{access_token}" }
   end
 end
