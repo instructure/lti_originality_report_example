@@ -15,12 +15,16 @@ $(document).ready(function(){
   });
 
   $('button.create-report').click(function(e){
-    var button = e.currentTarget
+    var button = e.currentTarget;
+    var assignmentId = button.getAttribute('data-assignment-tc-id');
+    var submissionId = button.getAttribute('data-subject-tc-id');
+    var score = $('#' + submissionId + '-' + assignmentId + '.score-input').val();
+    console.log(score);
     $.post(
-      '/assignments/' + button.getAttribute('data-assignment-tc-id') +
-      '/submissions/' + button.getAttribute('data-subject-tc-id') +
+      '/assignments/' + assignmentId +
+      '/submissions/' + submissionId +
       '/originality_report',
-      {},
+      { 'originality_score': score },
       function(data, status){
         console.log(status);
         console.log(data);

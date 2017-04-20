@@ -4,10 +4,14 @@ class OriginalityReportsController < ApplicationController
 
   def create
     head :not_found and return if submission.blank? || assignment.blank?
+    originality_score = params['originality_score'] || Random.rand(100)
+
+    puts "==="
+    puts originality_score
 
     # Do the originality report create request
     response = HTTParty.post(originality_report_creation_url,
-                             body: { originality_report: originality_report(4) },
+                             body: { originality_report: originality_report(originality_score) },
                              headers: authorization_header)
 
     # Store the report if it was created in Canvas

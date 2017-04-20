@@ -9,7 +9,9 @@
 </div>
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Submissions received</div>
+  <div class="panel-heading">
+    <h2>Submissions received</h2>
+  </div>
 
   <!-- Table -->
   <table class="table table-striped">
@@ -38,23 +40,46 @@
           </div>
         </td>
         <td>
-          <%= sub.originality_reports.last&.originality_score  %>
+          <%= sub.originality_reports.last&.originality_score ||
+              'Not Created' %>
         </td>
         <td>
-          <button type="button"
-                  class="btn btn-outline-primary get-submission"
-                  data-tp-guid="<%= sub.tool_proxy.guid %>"
-                  data-tc-id="<%= sub.tc_id %>"
-                  style="width:100%">
-            Fetch Submission
-          </button>
-          <% if sub.attachments.present? %>
+          <% if sub.attachments.blank? %>
+            <button type="button"
+                    class="btn btn-outline-primary get-submission"
+                    data-tp-guid="<%= sub.tool_proxy.guid %>"
+                    data-tc-id="<%= sub.tc_id %>"
+                    style="width:100%">
+              Fetch Submission
+            </button>
+          <% end %>
+          <% if sub.attachments.present? && sub.originality_reports.blank? %>
+            <div>
+              <label class="sr-only" for="score-group">
+                Originality Score
+              </label>
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <input type="text"
+                       id="<%= sub.tc_id %>-<%= sub.assignment.tc_id %>"
+                       class="form-control score-input"
+                       placeholder="Score" />
+              </div>
+
+            </div>
             <button type="button"
                     class="btn btn-outline-success create-report"
                     data-subject-tc-id="<%= sub.tc_id %>"
                     data-assignment-tc-id="<%= sub.assignment.tc_id %>"
                     style="width:100%;margin-top:5px;">
               Create Report
+            </button>
+          <% elsif sub.originality_reports.present? %>
+            <button type="button"
+                    class="btn btn-outline-warning create-report"
+                    data-subject-tc-id="<%= sub.tc_id %>"
+                    data-assignment-tc-id="<%= sub.assignment.tc_id %>"
+                    style="width:100%;margin-top:5px;">
+              Update Report
             </button>
           <% end %>
         </td>
