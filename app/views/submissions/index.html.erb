@@ -1,0 +1,61 @@
+<% content_for :javascripts do %>
+  <%= javascript_include_tag params[:controller] %>
+<% end %>
+<br>
+<div id="submission-index-alert"
+     class="alert alert-success alert-dismissible fade show"
+     role="alert">
+  <strong>Complete!</strong> Reload page to see data.
+</div>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Submissions received</div>
+
+  <!-- Table -->
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Tool Consumer Submission ID</th>
+      <th>LTI Assignment ID</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+      <th>Attachments</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @submissions.each_with_index do |sub, i| %>
+      <tr>
+        <th scope="row"><%= i + 1 %></th>
+        <td><%= sub.tc_id %></td>
+        <td><%= sub.assignment.lti_assignment_id %></td>
+        <td><%= sub.created_at %></td>
+        <td><%= sub.updated_at %></td>
+        <td>
+          <div style="max-width:200px;overflow:scroll;max-height:100px;">
+            <%= sub.attachments %>
+          </div>
+        </td>
+        <td>
+          <button type="button"
+                  class="btn btn-outline-primary get-submission"
+                  data-tp-guid="<%= sub.tool_proxy.guid %>"
+                  data-tc-id="<%= sub.tc_id %>"
+                  style="width:100%">
+            Fetch Submission
+          </button>
+          <% if sub.attachments.present? %>
+            <button type="button"
+                    class="btn btn-outline-success"
+                    data-tp-guid="<%= sub.tool_proxy.guid %>"
+                    data-tc-id="<%= sub.tc_id %>"
+                    style="width:100%;margin-top:5px;">
+              Create Report
+            </button>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

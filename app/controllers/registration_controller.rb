@@ -14,7 +14,9 @@ class RegistrationController < ApplicationController
       redirect_to registration_failure_url('Missing required capabilities') and return
     end
 
-    tool_proxy = ToolProxy.new(tcp_url: registration_request.tc_profile_url, base_url: request.base_url)
+    tool_proxy = ToolProxy.new(tcp_url: registration_request.tc_profile_url,
+                               base_url: request.base_url,
+                               authorization_url: authorization_service.endpoint)
     redirect_to registration_success_url(tool_proxy.guid) and return if create_tool_proxy(tool_proxy)
     redirect_to registration_failure_url('Error received from tool consumer') and return
   end
