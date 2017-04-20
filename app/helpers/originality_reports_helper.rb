@@ -14,7 +14,7 @@ module OriginalityReportsHelper
     {
       originality_report_url: 'http://www.instructure.com',
       # We just grab the last attachment for demoing
-      file_id: submission.attachments.last['id'],
+      file_id: submission.attachments&.last&.fetch('id'),
       originality_score: score
     }
   end
