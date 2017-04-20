@@ -28,7 +28,7 @@ $(document).ready(function(){
     var canvasEndpoint = '/assignments/' + assignmentId + '/submissions/' + submissionId + '/originality_report'
     var score = $('#' + submissionId + '-' + assignmentId + '.score-input').val();
 
-    if (button.getAttribute('data-updating') == 'true') {
+    if (button.getAttribute('data-updating') === 'true') {
       $.ajax({
         url: canvasEndpoint + '/' + button.getAttribute('data-or-id'),
         type: 'PUT',
