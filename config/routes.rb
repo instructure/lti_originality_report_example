@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     post 'submission/index', action: :index
   end
 
+  scope(controller: :originality_reports) do
+    post 'assignments/:assignment_tc_id/submissions/:submission_tc_id/originality_report',
+         action: :create, as: :originality_create
+  end
+
   namespace :event do
     post :submission
   end

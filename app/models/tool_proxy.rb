@@ -72,6 +72,11 @@ class ToolProxy < ActiveRecord::Base
           type: 'RestServiceProfile',
           service: 'vnd.Canvas.submission',
           action: %w(GET)
+        ),
+        IMS::LTI::Models::RestServiceProfile.new(
+          type: 'RestServiceProfile',
+          service: 'vnd.Canvas.OriginalityReport',
+          action: %w(GET POST PUT)
         )
       ]
     )

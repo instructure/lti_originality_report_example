@@ -14,11 +14,12 @@ module LtiAuthorizationHelper
   # Builds a service for retrieving access tokens
   # from Canvas.
   def authentication_service
+    tool_proxy = tool_proxy_from_guid || tool_proxy_from_assignment
     @_authentication_service ||= IMS::LTI::Services::AuthenticationService.new(
       iss: request.base_url,
-      aud: tool_proxy_from_guid.authorization_url,
-      sub: tool_proxy_from_guid.guid,
-      secret: tool_proxy_from_guid.shared_secret
+      aud: tool_proxy.authorization_url,
+      sub: tool_proxy.guid,
+      secret: tool_proxy.shared_secret
     )
   end
 
@@ -27,5 +28,16 @@ module LtiAuthorizationHelper
   # Returns the ToolProxy specified in the request
   def tool_proxy_from_guid
     @_tool_proxy_from_guid ||= ToolProxy.find_by(guid: params[:tool_proxy_guid])
+  end
+
+  def tool_proxy_from_assignment
+    assignment&.tool_proxy
+  end
+
+  # authorization_header
+  #
+  # Returns the ToolProxy specified in the request
+  def authorization_header
+    { 'Authorization' => "Bearer #{access_token}" }
   end
 end
