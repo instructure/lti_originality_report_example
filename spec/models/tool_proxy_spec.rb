@@ -79,6 +79,13 @@ RSpec.describe ToolProxy, type: :model do
       it "includes 'tp_half_shared_secret' of length 128" do
         expect(security_contract['tp_half_shared_secret'].length).to eq 128
       end
+
+      it "includes 'vnd.Canvas.OriginalityReport' service" do
+        service = security_contract['tool_service'].find do |s|
+          s['service'].include? 'vnd.Canvas.OriginalityReport'
+        end
+        expect(service).not_to be_nil
+      end
     end
   end
 end
