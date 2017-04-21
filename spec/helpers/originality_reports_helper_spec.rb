@@ -19,7 +19,7 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
   let(:lti_assignment_id) { SecureRandom.uuid }
   let(:assignment_model) { Assignment.create!(lti_assignment_id: lti_assignment_id, tool_proxy: tool_proxy, tc_id: 3) }
   let(:submission_model) { Submission.create!(tc_id: 23, assignment: assignment_model) }
-  let(:originality_report_model) { submission_model.originality_reports.create!(tc_id: 1, originality_score: originality_score, file_id: file_id) }
+  let(:originality_report_model) { submission_model.originality_reports.create!(tc_id: tc_id, originality_score: originality_score, file_id: file_id) }
   let(:params) { { 'submission_tc_id' => submission_model.tc_id, 'assignment_tc_id' => assignment_model.tc_id, 'or_tc_id' => originality_report_model.tc_id } }
   let(:report_response) { double(body: { originality_score: originality_score, file_id: file_id, id: tc_id }.to_json) }
 
