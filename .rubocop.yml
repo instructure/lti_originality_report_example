@@ -59,6 +59,9 @@ Metrics/LineLength:
     - 'db/schema.rb'
     - 'spec/**/*'
 
+Metrics/CyclomaticComplexity:
+  Max: 8
+
 Metrics/AbcSize:
   Max: 30
 
