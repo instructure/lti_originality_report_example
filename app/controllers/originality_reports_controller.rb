@@ -14,9 +14,9 @@ class OriginalityReportsController < ApplicationController
 
     # Do the originality report create request
     response = HTTParty.post(originality_report_creation_url,
-                             body: { originality_report: originality_report_json(score: originality_score,
-                                                                                 workflow_state: workflow_state) },
+                             body: { originality_report: originality_report_json(score: originality_score,                                            workflow_state: workflow_state) },
                              headers: authorization_header)
+
     # Store the report if it was created in Canvas
     persist_originality_report(response) if response.code == 201
 

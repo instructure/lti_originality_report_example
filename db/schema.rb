@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419140504) do
+ActiveRecord::Schema.define(version: 20170421162639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170419140504) do
   create_table "originality_reports", force: :cascade do |t|
     t.bigint   "tc_id",                      null: false
     t.integer  "file_id",                    null: false
-    t.float    "originality_score",          null: false
+    t.float    "originality_score"
     t.integer  "submission_id",              null: false
     t.integer  "originality_report_file_id"
     t.string   "originality_report_url"

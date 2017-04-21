@@ -10,12 +10,12 @@ module OriginalityReportsHelper
     )
   end
 
-  def originality_report_json(score: 0, workflow_state: nil)
+  def originality_report_json(score: nil, workflow_state: nil)
     {
       originality_report_url: 'http://www.instructure.com',
       # We just grab the last attachment for demo purposes
       file_id: submission.attachments&.last&.fetch('id'),
-      originality_score: score || 0,
+      originality_score: score,
       workflow_state: workflow_state
     }
   end
