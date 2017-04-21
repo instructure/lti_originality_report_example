@@ -70,7 +70,7 @@
                     class="btn btn-outline-success create-report"
                     data-subject-tc-id="<%= sub.tc_id %>"
                     data-assignment-tc-id="<%= sub.assignment.tc_id %>"
-                    data-or-id="<%= sub.originality_reports&.last&.tc_id %>"
+                    data-report-id="<%= sub.originality_reports&.last&.tc_id %>"
                     data-updating="<%= sub.originality_reports.present? %>"
                     style="width:100%;margin-top:5px;">
               <%= sub.originality_reports.blank? ? 'Create Report' : 'Update Report'  %>

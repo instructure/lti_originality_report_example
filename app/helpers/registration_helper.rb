@@ -43,6 +43,10 @@ module RegistrationHelper
     tool_consumer_profile.services_offered.find { |s| s.id.end_with? '#vnd.Canvas.authorization' }
   end
 
+  def originality_report_service
+    tool_consumer_profile.services_offered.find { |s| s.id.end_with? '#vnd.Canvas.OriginalityReport' }
+  end
+
   def registration_success_url(tp_guid)
     "#{registration_request.launch_presentation_return_url}?status=success&tool_proxy_guid=#{tp_guid}"
   end

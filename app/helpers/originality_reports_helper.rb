@@ -19,15 +19,27 @@ module OriginalityReportsHelper
     }
   end
 
+  # originality_report_edit_url
+  #
+  # Returns Canvas originality report
+  # edit endpoint. Note this was sent in the
+  # tool consumer profile during registration
+  # and saved.
   def originality_report_edit_url
-    base_url = tool_proxy_from_assignment.base_tc_url
-    "#{base_url}/api/lti/assignments/#{params['assignment_tc_id']}"\
-    "/submissions/#{params['submission_tc_id']}/originality_report/#{params['or_tc_id']}"
+    "#{originality_report_creation_url}/#{params['or_tc_id']}"
   end
 
+  # originality_report_creation_url
+  #
+  # Returns Canvas originality report
+  # edit endpoint. Note this was sent in the
+  # tool consumer profile during registration
+  # and saved.
   def originality_report_creation_url
-    base_url = tool_proxy_from_assignment.base_tc_url
-    "#{base_url}/api/lti/assignments/#{params['assignment_tc_id']}/submissions/#{params['submission_tc_id']}/originality_report"
+    template = assignment.tool_proxy.report_service_url
+    template&.gsub!('{assignment_id}', params['assignment_tc_id'])
+    template&.gsub!('{submission_id}', params['submission_tc_id'])
+    template
   end
 
   def submission
