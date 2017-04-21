@@ -7,8 +7,11 @@ class OriginalityReportsController < ApplicationController
   # Creates an originality report in Canvas and persists
   # an report in the tool if succesfull.
   def create
+    # Respond with 404 if assignment or submission is missing
     head :not_found and return if submission.blank? || assignment.blank?
 
+    # If no score was specified, use  'pending' for the originality report
+    # workflow state
     originality_score = params['originality_score'].present? ? params['originality_score'] : nil
     workflow_state = originality_score.blank? ? 'pending' : nil
 
