@@ -36,7 +36,7 @@ class OriginalityReportsController < ApplicationController
     end
 
     response = HTTParty.put(originality_report_edit_url,
-                            body: { originality_report: originality_report_json(params['originality_score']) },
+                            body: { originality_report: originality_report_json(score: params['originality_score']) },
                             headers: authorization_header)
 
     if response.code == 200

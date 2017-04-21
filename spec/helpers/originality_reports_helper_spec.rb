@@ -75,9 +75,9 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
       expect(report[:originality_score]).to eq originality_score
     end
 
-    it 'sets the score to 0 if not provied' do
+    it 'sets the score to nil if not provied' do
       report = helper.originality_report_json
-      expect(report[:originality_score]).to eq 0
+      expect(report[:originality_score]).to eq nil
     end
 
     it 'sets the workflow state' do
