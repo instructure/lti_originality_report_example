@@ -60,19 +60,29 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
 
   describe '#originality_report' do
     it 'includes an originality report url' do
-      report = helper.originality_report_json(originality_score)
+      report = helper.originality_report_json(score: originality_score)
       expect(report[:originality_report_url]).not_to be_blank
     end
 
     it 'includes the a file id' do
       submission.attachments = [{ 'id' => 44 }]
-      report = helper.originality_report_json(originality_score)
+      report = helper.originality_report_json(score: originality_score)
       expect(report[:file_id]).to eq 44
     end
 
     it 'uses the specified originality score' do
-      report = helper.originality_report_json(originality_score)
+      report = helper.originality_report_json(score: originality_score)
       expect(report[:originality_score]).to eq originality_score
+    end
+
+    it 'sets the score to 0 if not provied' do
+      report = helper.originality_report_json
+      expect(report[:originality_score]).to eq 0
+    end
+
+    it 'sets the workflow state' do
+      report = helper.originality_report_json(workflow_state: 'pending')
+      expect(report[:workflow_state]).to eq 'pending'
     end
   end
 
