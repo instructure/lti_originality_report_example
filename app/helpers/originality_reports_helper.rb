@@ -1,6 +1,10 @@
 module OriginalityReportsHelper
   include LtiAuthorizationHelper
 
+  # persist_originality_report
+  #
+  # Saves an originality report in the tool's
+  # DB.
   def persist_originality_report(report_resposne)
     parsed_body = JSON.parse(report_resposne.body)
     submission.originality_reports.create!(
@@ -10,6 +14,12 @@ module OriginalityReportsHelper
     )
   end
 
+  # originality_report_json
+  #
+  # Returns the originality report object
+  # used to create a report via the Canvas
+  # API. See the Canvas API for required
+  # and non-required fields.
   def originality_report_json(score)
     {
       originality_report_url: 'http://www.instructure.com',
@@ -42,14 +52,26 @@ module OriginalityReportsHelper
     template
   end
 
+  # submission
+  #
+  # Returns the submission identified by the
+  # request parameters.
   def submission
     @_submission ||= Submission.find_by(tc_id: params['submission_tc_id'])
   end
 
+  # assignment
+  #
+  # Returns the assignment identified by the
+  # request parameters.
   def assignment
     @_assignment ||= Assignment.find_by(tc_id: params['assignment_tc_id'])
   end
 
+  # originality_report
+  #
+  # Returns the originality_report identified by the
+  # request parameters.
   def originality_report
     @_originality_report ||= OriginalityReport.find_by(tc_id: params['or_tc_id'])
   end

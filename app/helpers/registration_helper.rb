@@ -40,11 +40,15 @@ module RegistrationHelper
   end
 
   def authorization_service
-    tool_consumer_profile.services_offered.find { |s| s.id.end_with? '#vnd.Canvas.authorization' }
+    find_service('#vnd.Canvas.authorization')
   end
 
   def originality_report_service
-    tool_consumer_profile.services_offered.find { |s| s.id.end_with? '#vnd.Canvas.OriginalityReport' }
+    find_service('#vnd.Canvas.OriginalityReport')
+  end
+
+  def find_service(service_id)
+    tool_consumer_profile.services_offered.find { |s| s.id.end_with? service_id }
   end
 
   def registration_success_url(tp_guid)
