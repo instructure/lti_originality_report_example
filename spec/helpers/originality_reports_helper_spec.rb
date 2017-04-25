@@ -21,6 +21,7 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
   let(:submission_model) { Submission.create!(tc_id: 23, assignment: assignment_model) }
   let(:originality_report_model) { submission_model.originality_reports.create!(tc_id: tc_id, originality_score: originality_score, file_id: file_id) }
   let(:params) { { 'submission_tc_id' => submission_model.tc_id, 'assignment_tc_id' => assignment_model.tc_id, 'or_tc_id' => originality_report_model.tc_id } }
+  let(:params) { { 'submission_tc_id' => submission_model.tc_id.to_s, 'assignment_tc_id' => assignment_model.tc_id.to_s, 'or_tc_id' => originality_report_model.tc_id.to_s } }
   let(:report_response) { double(body: { originality_score: originality_score, file_id: file_id, id: tc_id }.to_json) }
 
   before do
@@ -88,8 +89,8 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
 
   describe '#originality_report_creation_url' do
     it 'creates the proper url' do
-      tool_proxy.update_attributes(authorization_url: 'http://www.test.com/authorize')
-      expect(helper.originality_report_creation_url).to eq "http://www.test.com/api/lti/assignments/#{assignment_model.tc_id}/submissions/#{submission_model.tc_id}/originality_report"
+      tool_proxy.update_attributes(report_service_url: 'http://www.test.com/{assignment_id}/{submission_id}')
+      expect(helper.originality_report_creation_url).to eq "http://www.test.com/#{assignment_model.tc_id}/#{submission_model.tc_id}"
     end
   end
 

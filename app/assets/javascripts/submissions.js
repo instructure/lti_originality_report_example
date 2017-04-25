@@ -30,7 +30,7 @@ $(document).ready(function(){
 
     if (button.getAttribute('data-updating') === 'true') {
       $.ajax({
-        url: canvasEndpoint + '/' + button.getAttribute('data-or-id'),
+        url: canvasEndpoint + '/' + button.getAttribute('data-report-id'),
         type: 'PUT',
         data: { 'originality_score': score },
         success: success
