@@ -19,7 +19,7 @@ class RegistrationController < ApplicationController
                                base_url: request.base_url,
                                authorization_url: authorization_service.endpoint,
                                report_service_url: originality_report_service.endpoint,
-                               submission_service_url: '')
+                               submission_service_url: submission_service.endpoint)
 
     redirect_to registration_success_url(tool_proxy.guid) and return if create_tool_proxy(tool_proxy)
     redirect_to registration_failure_url('Error received from tool consumer') and return

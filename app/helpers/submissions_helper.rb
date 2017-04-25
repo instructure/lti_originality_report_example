@@ -2,8 +2,10 @@ module SubmissionsHelper
   include LtiAuthorizationHelper
 
   def retrieve_submission
-    url = "#{tool_proxy_from_guid.base_tc_url}/api/lti/assignments/:assignment_id/submissions/#{params[:tc_submission_id]}"
-    response = HTTParty.get(url, headers: { 'Authorization' => "Bearer #{access_token}" })
+    template = tool_proxy_from_guid.submission_service_url
+    template&.gsub!('{submission_id}', params[:tc_submission_id])
+    template&.gsub!('{assignment_id}', 'assignment_id')
+    response = HTTParty.get(template, headers: { 'Authorization' => "Bearer #{access_token}" })
     JSON.parse(response.body)
   end
 end
