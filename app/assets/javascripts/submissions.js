@@ -5,17 +5,19 @@ $(document).ready(function(){
     $('#submission-index-alert').show();
   }
 
+  function success(data, status) {
+    console.log(status);
+    console.log(data);
+    showStatus();
+  }
+
   $('button.get-submission').click(function(e){
     var button = e.currentTarget
     $.get(
       '/tool_proxy/' + button.getAttribute('data-tp-guid') +
       '/submissions/' + button.getAttribute('data-tc-id') + '/retrieve',
       {},
-      function(data, status){
-        console.log(status);
-        console.log(data);
-        showStatus();
-      }
+      success
     );
   });
 
@@ -23,18 +25,23 @@ $(document).ready(function(){
     var button = e.currentTarget;
     var assignmentId = button.getAttribute('data-assignment-tc-id');
     var submissionId = button.getAttribute('data-subject-tc-id');
+    var canvasEndpoint = '/assignments/' + assignmentId + '/submissions/' + submissionId + '/originality_report'
     var score = $('#' + submissionId + '-' + assignmentId + '.score-input').val();
-    console.log(score);
-    $.post(
-      '/assignments/' + assignmentId +
-      '/submissions/' + submissionId +
-      '/originality_report',
-      { 'originality_score': score },
-      function(data, status){
-        console.log(status);
-        console.log(data);
-        showStatus();
-      }
-    );
+
+    if (button.getAttribute('data-updating') === 'true') {
+      $.ajax({
+        url: canvasEndpoint + '/' + button.getAttribute('data-report-id'),
+        type: 'PUT',
+        data: { 'originality_score': score },
+        success: success
+      });
+    } else {
+      $.post(
+        canvasEndpoint,
+        { 'originality_score': score },
+        success
+      );
+    }
+
   });
 });

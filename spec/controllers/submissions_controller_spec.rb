@@ -55,6 +55,12 @@ RSpec.describe SubmissionsController, type: :controller do
       @assignment = Assignment.create!(lti_assignment_id: lti_assignment_id, tool_proxy: tool_proxy)
     end
 
+    it 'returns 404 if the submission is not found' do
+      params[:tc_submission_id] = Submission.count + 1
+      get :retrieve_and_store, params: params
+      expect(response).to be_not_found
+    end
+
     it 'sets the submissions attachment data' do
       params[:tc_submission_id] = 1
       s = Submission.create!(assignment: @assignment, tc_id: 1)
@@ -67,12 +73,6 @@ RSpec.describe SubmissionsController, type: :controller do
       s = Submission.create!(assignment: @assignment, tc_id: 1)
       get :retrieve_and_store, params: params
       expect(Submission.find(s.id).assignment.tc_id).to eq assignment_tc_id
-    end
-
-    it 'returns 404 if the submission is not found' do
-      params[:tc_submission_id] = Submission.count + 1
-      get :retrieve_and_store, params: params
-      expect(response).to be_not_found
     end
 
     it 'returns 404 if the submission is not found in Canvas' do

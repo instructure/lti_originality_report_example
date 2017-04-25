@@ -12,6 +12,7 @@ RSpec.describe OriginalityReportsController, type: :controller do
   let(:submission_model) { Submission.create!(tc_id: 23, assignment: assignment_model, attachments: attachments) }
   let(:params) { { 'submission_tc_id' => submission_model.tc_id, 'assignment_tc_id' => assignment_model.tc_id } }
   let(:report_response) { double(body: { originality_score: originality_score, file_id: file_id, id: tc_id }.to_json, code: 201) }
+  let(:originality_report_model) { OriginalityReport.create!(tc_id: 1, originality_score: originality_score, file_id: file_id, submission: submission_model) }
   let(:random_access_token) { SecureRandom.uuid }
 
   before do
@@ -54,6 +55,33 @@ RSpec.describe OriginalityReportsController, type: :controller do
     it 'returns the originality report' do
       post :create, params: { assignment_tc_id: assignment_model.tc_id, submission_tc_id: submission_model.tc_id }
       expect(JSON.parse(response.body)['id']).to eq tc_id
+    end
+  end
+
+  describe '#update' do
+    let(:params) do
+      {
+        'assignment_tc_id' => assignment_model.tc_id,
+        'submission_tc_id' => submission_model.tc_id,
+        'or_tc_id' => originality_report_model.tc_id
+      }
+    end
+
+    before do
+      allow(controller).to receive(:params) { params }
+    end
+
+    it 'returns not found if originality report is not found' do
+      originality_report_model.destroy!
+      put :update, params: params
+      expect(response).to be_not_found
+    end
+
+    it 'updates the originality report' do
+      new_score = 45
+      allow(HTTParty).to receive(:put) { double(body: { originality_score: new_score, file_id: file_id, id: tc_id }.to_json, code: 200) }
+      put :update, params: params.merge(originality_score: new_score)
+      expect(originality_report_model.reload.originality_score).to eq new_score
     end
   end
 end

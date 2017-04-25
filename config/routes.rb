@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   scope(controller: :originality_reports) do
     post 'assignments/:assignment_tc_id/submissions/:submission_tc_id/originality_report',
          action: :create, as: :originality_create
+    put 'assignments/:assignment_tc_id/submissions/:submission_tc_id/originality_report/:or_tc_id',
+         action: :update, as: :originality_update
   end
 
   namespace :event do
