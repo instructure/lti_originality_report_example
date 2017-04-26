@@ -6,6 +6,19 @@ class SubmissionsController < ApplicationController
   after_action :allow_iframe, only: :index
   before_action :lti_authentication, only: :index
 
+  # retrieve_and_store
+  #
+  # retrieves the following submission data from Canvas
+  # after a submission is received via webhook:
+  #
+  # assignment_id - before this point the actual ID of the
+  # assignment is not known. This data is contained in the
+  # payload of the Canvas submission endpoint which is used
+  # in this method.
+  #
+  # attachments - data regaurding the attachments is needed to
+  # retrieve submission attachments for processing. This data
+  # is also in the Canvas submission endpoint payload.
   def retrieve_and_store
     # Get the submission
     submission = Submission.find_by(tc_id: params['tc_submission_id'])

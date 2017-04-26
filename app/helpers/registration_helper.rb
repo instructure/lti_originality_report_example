@@ -47,6 +47,10 @@ module RegistrationHelper
     find_service('#vnd.Canvas.OriginalityReport')
   end
 
+  def submission_service
+    find_service('#vnd.Canvas.submission')
+  end
+
   def find_service(service_id)
     tool_consumer_profile.services_offered.find { |s| s.id.end_with? service_id }
   end

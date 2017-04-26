@@ -118,6 +118,17 @@ RSpec.shared_context 'lti_spec_helper', shared_context: :metadata do
              "@type":"RestService"
           },
           {
+             "endpoint":"http:\/\/canvas.docker\/api\/lti\/assignment\/2\/submissions",
+             "format":[
+                "application\/json"
+             ],
+             "action":[
+                "POST", "PUT", "GET"
+             ],
+             "@id":"http:\/\/canvas.docker\/api\/lti\/courses\/2\/tool_consumer_profile\/cf9da3cf-7273-4e11-a423-0fbd0416057e#vnd.Canvas.submission",
+             "@type":"RestService"
+          },
+          {
              "endpoint":"http:\/\/canvas.docker\/api\/lti\/tool_settings\/tool_proxy\/{tool_proxy_id}",
              "format":[
                 "application\/vnd.ims.lti.v2.toolsettings+json",
