@@ -4,7 +4,7 @@ class EventController < ApplicationController
   # submission
   #
   # Creates a submission for the specified assignment when a
-  # webhook is reived.
+  # webhook is received.
   def submission
     json = JSON.parse(request.body.read)
     assignment = Assignment.find_by(lti_assignment_id: json['body']['lti_assignment_id'])

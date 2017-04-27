@@ -3,7 +3,7 @@ module SubmissionsHelper
 
   # retrieve_submission
   #
-  # Retrive a submission and its details via the submission
+  # Retrieve a submission and its details via the submission
   # service endpoint provided in the tool consumer profile.
   def retrieve_submission
     template = tool_proxy_from_guid.submission_service_url

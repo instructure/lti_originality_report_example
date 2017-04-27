@@ -48,7 +48,7 @@ module RegistrationHelper
   # create_tool_proxy
   #
   # Attempts to create the tool proxy in Canvas.
-  # If succesful the tool consumer's half the shared
+  # If successful the tool consumer's half of the shared
   # secret is prepended to the tool provider's half and
   # saved.
   #
@@ -65,7 +65,7 @@ module RegistrationHelper
 
   # authorization_service
   #
-  # Returns the service used to retrive access
+  # Returns the service used to retrieve access
   # tokens from Canvas
   def authorization_service
     find_service('#vnd.Canvas.authorization')

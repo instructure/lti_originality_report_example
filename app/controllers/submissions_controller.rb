@@ -16,7 +16,7 @@ class SubmissionsController < ApplicationController
   # payload of the Canvas submission endpoint which is used
   # in this method.
   #
-  # attachments - data regaurding the attachments is needed to
+  # attachments - data reguarding the attachments is needed to
   # retrieve submission attachments for processing. This data
   # is also in the Canvas submission endpoint payload.
   def retrieve_and_store
