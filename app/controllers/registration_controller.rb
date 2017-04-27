@@ -1,11 +1,18 @@
 # RegistrationController
 #
 # Handles incoming registration requests from tool
-# consumers.
+# consumers. For a more explicit example of LTI 2
+# registration please see
+# https://github.com/instructure/lti2_reference_tool_provider
 class RegistrationController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :register
   include RegistrationHelper
 
+  # register
+  #
+  # handles incoming registration requests from the
+  # tool consumer, fetches a custom tool consumer profile
+  # from Canvas, and registers a tool proxy
   def register
     tcp = tool_proxy_registration_service.tool_consumer_profile
 

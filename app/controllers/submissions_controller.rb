@@ -36,6 +36,9 @@ class SubmissionsController < ApplicationController
     render json: submission, status: :ok
   end
 
+  # index
+  #
+  # presents a list of submissions received via webhook
   def index
     @submissions = tool_proxy.submissions
   end
