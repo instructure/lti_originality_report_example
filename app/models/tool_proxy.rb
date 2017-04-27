@@ -36,11 +36,6 @@ class ToolProxy < ActiveRecord::Base
     )
   end
 
-  def base_tc_url
-    url = URI.parse(authorization_url)
-    "#{url.scheme}://#{url.host}"
-  end
-
   private
 
   # tool_profile

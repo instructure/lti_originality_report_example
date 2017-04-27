@@ -20,6 +20,7 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
   let(:assignment_model) { Assignment.create!(lti_assignment_id: lti_assignment_id, tool_proxy: tool_proxy, tc_id: 3) }
   let(:submission_model) { Submission.create!(tc_id: 23, assignment: assignment_model) }
   let(:originality_report_model) { submission_model.originality_reports.create!(tc_id: tc_id, originality_score: originality_score, file_id: file_id) }
+  let(:params) { { 'submission_tc_id' => submission_model.tc_id, 'assignment_tc_id' => assignment_model.tc_id, 'or_tc_id' => originality_report_model.tc_id } }
   let(:params) { { 'submission_tc_id' => submission_model.tc_id.to_s, 'assignment_tc_id' => assignment_model.tc_id.to_s, 'or_tc_id' => originality_report_model.tc_id.to_s } }
   let(:report_response) { double(body: { originality_score: originality_score, file_id: file_id, id: tc_id }.to_json) }
 
@@ -60,19 +61,29 @@ RSpec.describe OriginalityReportsHelper, type: :helper do
 
   describe '#originality_report' do
     it 'includes an originality report url' do
-      report = helper.originality_report_json(originality_score)
+      report = helper.originality_report_json(score: originality_score)
       expect(report[:originality_report_url]).not_to be_blank
     end
 
     it 'includes the a file id' do
       submission.attachments = [{ 'id' => 44 }]
-      report = helper.originality_report_json(originality_score)
+      report = helper.originality_report_json(score: originality_score)
       expect(report[:file_id]).to eq 44
     end
 
     it 'uses the specified originality score' do
-      report = helper.originality_report_json(originality_score)
+      report = helper.originality_report_json(score: originality_score)
       expect(report[:originality_score]).to eq originality_score
+    end
+
+    it 'sets the score to nil if not provied' do
+      report = helper.originality_report_json
+      expect(report[:originality_score]).to eq nil
+    end
+
+    it 'sets the workflow state' do
+      report = helper.originality_report_json(workflow_state: 'pending')
+      expect(report[:workflow_state]).to eq 'pending'
     end
   end
 

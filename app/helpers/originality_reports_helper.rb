@@ -20,12 +20,13 @@ module OriginalityReportsHelper
   # used to create a report via the Canvas
   # API. See the Canvas API for required
   # and non-required fields.
-  def originality_report_json(score)
+  def originality_report_json(score: nil, workflow_state: nil)
     {
       originality_report_url: 'http://www.instructure.com',
-      # We just grab the last attachment for demoing
+      # We just grab the last attachment for demo purposes
       file_id: submission.attachments&.last&.fetch('id'),
-      originality_score: score
+      originality_score: score,
+      workflow_state: workflow_state
     }
   end
 

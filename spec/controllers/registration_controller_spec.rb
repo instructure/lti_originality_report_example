@@ -37,6 +37,11 @@ RSpec.describe RegistrationController, type: :controller do
       expect(ToolProxy.last.authorization_url).to eq 'http://canvas.docker/api/lti/courses/2/authorize'
     end
 
+    it 'saves the submission service url' do
+      post :register, params: registration_message
+      expect(ToolProxy.last.submission_service_url).to eq 'http://canvas.docker/api/lti/assignment/2/submissions'
+    end
+
     it 'assembles both halves of the shared secret' do
       post :register, params: registration_message
       tp = ToolProxy.last
