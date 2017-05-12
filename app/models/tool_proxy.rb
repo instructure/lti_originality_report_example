@@ -4,7 +4,7 @@ class ToolProxy < ActiveRecord::Base
   has_many :submissions, through: :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
-  ENABLED_CAPABILITY = %w(Security.splitSecret Canvas.placements.similarityDetection).freeze
+  ENABLED_CAPABILITY = %w(Security.splitSecret Canvas.placements.similarityDetection vnd.Canvas.webhooks.root_account.all).freeze
   REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
 
   # to_json
@@ -126,11 +126,20 @@ class ToolProxy < ActiveRecord::Base
     )
   end
 
-  def basic_message(path:, capabilities:)
+  def basic_message(path:, capabilities: [], parameters: {})
+    parameter = []
+    parameters.each do |k, v|
+      parameter << IMS::LTI::Models::Parameter.new(
+        name: k,
+        variable: v
+      )
+    end
+    
     IMS::LTI::Models::MessageHandler.new(
       message_type: 'basic-lti-launch-request',
       path: path,
-      enabled_capability: capabilities
+      enabled_capability: capabilities,
+      parameter: parameter
     )
   end
 
@@ -166,6 +175,14 @@ class ToolProxy < ActiveRecord::Base
         message: [basic_message(
           path: '/assignments/configure',
           capabilities: %w(Canvas.placements.similarityDetection)
+        )]
+      ),
+      IMS::LTI::Models::ResourceHandler.from_json(
+        resource_type: { code: 'originality_reports' },
+        resource_name: { default_value: 'Similarity Detection Tool', key: '' },
+        message: [basic_message(
+          path: '/originality_report',
+          parameters: { assignment_id: 'Canvas.assignment.id' }
         )]
       )
     ]

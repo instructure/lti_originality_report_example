@@ -26,7 +26,8 @@ module OriginalityReportsHelper
       # We just grab the last attachment for demo purposes
       file_id: submission.attachments&.last&.fetch('id'),
       originality_score: score,
-      workflow_state: workflow_state
+      workflow_state: workflow_state,
+      originality_report_resource_type_code: 'originality_reports'
     }
   end
 

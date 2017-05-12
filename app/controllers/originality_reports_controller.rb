@@ -1,5 +1,7 @@
 class OriginalityReportsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: %i(create update)
+  skip_before_filter :verify_authenticity_token, only: %i(create update show)
+  after_action :allow_iframe, only: :show
+  include LtiHelper
   include OriginalityReportsHelper
 
   # create
@@ -44,5 +46,8 @@ class OriginalityReportsController < ApplicationController
     end
 
     render json: response.body, status: response.code
+  end
+  
+  def show
   end
 end

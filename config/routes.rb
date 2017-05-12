@@ -21,6 +21,8 @@ Rails.application.routes.draw do
          action: :create, as: :originality_create
     put 'assignments/:assignment_tc_id/submissions/:submission_tc_id/originality_report/:or_tc_id',
          action: :update, as: :originality_update
+    post 'originality_report',
+        action: :show, as: :originality_report_show
   end
 
   namespace :event do
