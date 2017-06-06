@@ -182,7 +182,7 @@ class ToolProxy < ActiveRecord::Base
         resource_name: { default_value: 'Similarity Detection Tool', key: '' },
         message: [basic_message(
           path: '/originality_report',
-          parameters: { assignment_id: 'Canvas.assignment.id' }
+          # parameters: { assignment_id: 'Canvas.assignment.id' }
         )]
       )
     ]

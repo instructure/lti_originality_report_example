@@ -27,7 +27,8 @@ module OriginalityReportsHelper
       file_id: submission.attachments&.last&.fetch('id'),
       originality_score: score,
       workflow_state: workflow_state,
-      originality_report_resource_type_code: 'originality_reports'
+      tool_setting: { resource_type_code: 'originality_reports' }
+      # tool_setting: { resource_type_code: 'originality_reports', resource_url:'http://originality.docker/test' }
     }
   end
 
