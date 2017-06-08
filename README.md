@@ -14,3 +14,9 @@ docker-compose up --build
 docker-compose exec web rails db:reset
 docker-compose exec web rails db:migrate
 ```
+For local developement a `.env` file should be created at the root directory of the repository and look like this:
+```
+CANVAS_DEV_KEY=<your developer key id>
+CANVAS_DEV_SECRET=<your deveoper key secret>
+```
+The developer key values in this file should be from the developer key associated with your custom tool consumer profile.
