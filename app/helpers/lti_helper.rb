@@ -1,7 +1,4 @@
 module LtiHelper
-  def allow_iframe
-    response.headers.except! 'X-Frame-Options'
-  end
 
   # lti_authentication
   #
