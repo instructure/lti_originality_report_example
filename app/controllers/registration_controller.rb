@@ -36,9 +36,9 @@ class RegistrationController < ApplicationController
   def tool_product_profile
     raw_profile = JSON::JWT.new(
       sub: ENV['CANVAS_DEV_KEY'],
-      reg: registration_url,
-      vendor: 'Instructure.com',
-      product: 'similarity_reference_tool'
+      com_instructure_canvas_reg: registration_url,
+      com_instructure_canvas_vendor: 'Instructure.com',
+      com_instructure_canvas_product: 'similarity_reference_tool'
     )
     @product_profile = raw_profile.sign(ENV['CANVAS_DEV_SECRET'], :HS256).to_s
   end
