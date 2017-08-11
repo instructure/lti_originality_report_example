@@ -129,7 +129,7 @@ class ToolProxy < ActiveRecord::Base
         variable: v
       )
     end
-    
+
     IMS::LTI::Models::MessageHandler.new(
       message_type: 'basic-lti-launch-request',
       path: path,
