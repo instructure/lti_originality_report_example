@@ -5,8 +5,11 @@
 # registration please see
 # https://github.com/instructure/lti2_reference_tool_provider
 class RegistrationController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :register
   include RegistrationHelper
+  include LtiHelper
+  
+  skip_before_action :verify_authenticity_token, only: :register
+  before_action :allow_iframe
 
   # register
   #
@@ -26,8 +29,17 @@ class RegistrationController < ApplicationController
                                authorization_url: authorization_service.endpoint,
                                report_service_url: originality_report_service.endpoint,
                                submission_service_url: submission_service.endpoint)
+    redirect_to registration_failure_url('Error received from tool consumer') unless create_tool_proxy(tool_proxy)
+    @success_url = registration_success_url(tool_proxy.guid)
+  end
 
-    redirect_to registration_success_url(tool_proxy.guid) and return if create_tool_proxy(tool_proxy)
-    redirect_to registration_failure_url('Error received from tool consumer') and return
+  def tool_product_profile
+    raw_profile = JSON::JWT.new(
+      sub: ENV['CANVAS_DEV_KEY'],
+      reg: registration_url,
+      vendor: 'Instructure.com',
+      product: 'similarity_reference_tool'
+    )
+    @product_profile = raw_profile.sign(ENV['CANVAS_DEV_SECRET'], :HS256).to_s
   end
 end

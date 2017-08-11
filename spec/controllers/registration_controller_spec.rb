@@ -21,11 +21,6 @@ RSpec.describe RegistrationController, type: :controller do
   end
 
   describe 'POST #register' do
-    it 'registers a tool proxy' do
-      post :register, params: registration_message
-      expect(response).to redirect_to "http://canvas.docker/courses/2/lti/registration_return?status=success&tool_proxy_guid=#{tool_proxy_guid}"
-    end
-
     it 'persists a ToolProxy' do
       prev_count = ToolProxy.count
       post :register, params: registration_message

@@ -4,7 +4,7 @@ class ToolProxy < ActiveRecord::Base
   has_many :submissions, through: :assignments
 
   TOOL_PROXY_FORMAT = 'application/vnd.ims.lti.v2.toolproxy+json'.freeze
-  ENABLED_CAPABILITY = %w(Security.splitSecret Canvas.placements.similarityDetection vnd.Canvas.webhooks.root_account.all).freeze
+  ENABLED_CAPABILITY = %w(Security.splitSecret Canvas.placements.similarityDetection).freeze
   REQUIRED_CAPABILITIES = %w(Canvas.placements.similarityDetection).freeze
 
   # to_json
@@ -60,11 +60,6 @@ class ToolProxy < ActiveRecord::Base
       tool_service: [
         IMS::LTI::Models::RestServiceProfile.new(
           type: 'RestServiceProfile',
-          service: 'vnd.Canvas.webhooksSubscription',
-          action: %w(POST GET PUT DELETE)
-        ),
-        IMS::LTI::Models::RestServiceProfile.new(
-          type: 'RestServiceProfile',
           service: 'vnd.Canvas.submission',
           action: %w(GET)
         ),
@@ -100,7 +95,7 @@ class ToolProxy < ActiveRecord::Base
         default_value: 'LTI 2.1 tool provider reference implementation'
       },
       product_family: {
-        code: 'similarity detection reference tool',
+        code: 'similarity_reference_tool',
         vendor: {
           code: 'Instructure.com',
           vendor_name: {

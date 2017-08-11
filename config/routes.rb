@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   scope(controller: :registration) do
     post 'register', action: :register, as: :registration
+    get 'tool_product_profile', action: :tool_product_profile, as: :tool_product_profile
   end
 
   scope(controller: :assignments) do
