@@ -47,7 +47,6 @@ class OriginalityReportsController < ApplicationController
 
     render json: response.body, status: response.code
   end
-  
-  def show
-  end
+
+  def show; end
 end

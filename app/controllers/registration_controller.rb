@@ -7,7 +7,7 @@
 class RegistrationController < ApplicationController
   include RegistrationHelper
   include LtiHelper
-  
+
   skip_before_action :verify_authenticity_token, only: :register
   before_action :allow_iframe
 
