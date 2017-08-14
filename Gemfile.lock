@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/instructure/ims-lti.git
-  revision: f825b5520a34ba5af8c0aa5d4b366034a38e360d
-  ref: f825b5520a34ba5af8c0aa5d4b366034a38e360d
+  revision: 3343ce561317a22daf09fc5878ccc1963a5a014f
+  ref: 3343ce561317a22daf09fc5878ccc1963a5a014f
   specs:
     ims-lti (2.1.2)
       builder (~> 3.2)

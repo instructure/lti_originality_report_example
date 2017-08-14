@@ -14,7 +14,7 @@ end
 
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'httparty'
-gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', ref: 'f825b5520a34ba5af8c0aa5d4b366034a38e360d'
+gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', ref: '3343ce561317a22daf09fc5878ccc1963a5a014f'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'json-jwt'

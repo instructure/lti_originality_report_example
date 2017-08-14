@@ -31,9 +31,9 @@ class RegistrationController < ApplicationController
     redirect_to registration_failure_url('Error received from tool consumer') unless create_tool_proxy(tool_proxy)
     @success_url = registration_success_url(tool_proxy.guid)
   rescue IMS::LTI::Errors::AuthenticationFailedError => e
-    logger.debug('---- registration errors ----')
+    logger.debug("---- registration errors ----\n")
     logger.debug(e.assertion)
-    logger.debut('-----------------------------')
+    logger.debug("-----------------------------\n")
   end
 
   def tool_product_profile
