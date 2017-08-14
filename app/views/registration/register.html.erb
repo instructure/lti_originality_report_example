@@ -16,4 +16,14 @@
   <div class="row">
     <button type="button" class="btn btn-success" onclick="finishRegistration()">Finish Registration</button>
   </div>
+  <div class="row">
+    <table class="table" style="margin-top: 20px;">
+      <% params.each do |k, v| %>
+        <tr>
+          <td><%= k %></td>
+          <td><%= v %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 </div>
