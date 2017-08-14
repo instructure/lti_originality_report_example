@@ -33,6 +33,7 @@ class RegistrationController < ApplicationController
   rescue IMS::LTI::Errors::AuthenticationFailedError => e
     logger.debug("---- registration errors ----\n")
     logger.debug(e.assertion)
+    logger.debug(e.grant_type)
     logger.debug("-----------------------------\n")
   end
 
