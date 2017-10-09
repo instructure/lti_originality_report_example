@@ -6,6 +6,9 @@ module LtiAuthorizationHelper
   # Returns an access token used for making calls
   # to LTI 2 endpoints in Canvas.
   def access_token
+    puts "---------- Access Token -------------"
+    puts authentication_service.access_token
+    puts "-------------------------------------"
     authentication_service.access_token
   end
 

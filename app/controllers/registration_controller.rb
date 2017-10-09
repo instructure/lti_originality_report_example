@@ -18,7 +18,6 @@ class RegistrationController < ApplicationController
   # from Canvas, and registers a tool proxy
   def register
     tcp = tool_proxy_registration_service.tool_consumer_profile
-
     unless tcp.supports_capabilities?(*ToolProxy::REQUIRED_CAPABILITIES)
       redirect_to registration_failure_url('Missing required capabilities') and return
     end
@@ -35,6 +34,7 @@ class RegistrationController < ApplicationController
     logger.debug(e.assertion)
     logger.debug(e.grant_type)
     logger.debug("-----------------------------\n")
+    raise e
   end
 
   def tool_product_profile

@@ -37,7 +37,12 @@ class OriginalityReportsController < ApplicationController
       head :not_found and return
     end
 
-    response = HTTParty.put(originality_report_edit_url,
+    puts 'updating'
+    puts originality_report_edit_url
+    puts({ originality_report: originality_report_json(score: params['originality_score']) }.to_json)
+    puts '/updating'
+
+    response = HTTParty.post(originality_report_edit_url,
                             body: { originality_report: originality_report_json(score: params['originality_score']) },
                             headers: authorization_header)
 

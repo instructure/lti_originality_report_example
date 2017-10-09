@@ -39,6 +39,7 @@ module OriginalityReportsHelper
   # tool consumer profile during registration
   # and saved.
   def originality_report_edit_url
+    # originality_report_creation_url
     "#{originality_report_creation_url}/#{params['or_tc_id']}"
   end
 
