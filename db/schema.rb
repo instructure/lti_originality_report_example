@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20170424144902) do
     t.string "authorization_url"
     t.string "report_service_url"
     t.string "submission_service_url"
+    t.string "string"
     t.index ["guid"], name: "index_tool_proxies_on_guid", using: :btree
   end
 

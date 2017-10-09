@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   scope(controller: :registration) do
     post 'register', action: :register, as: :registration
+    get 'tool_product_profile', action: :tool_product_profile, as: :tool_product_profile
   end
 
   scope(controller: :assignments) do
@@ -21,6 +22,8 @@ Rails.application.routes.draw do
          action: :create, as: :originality_create
     put 'assignments/:assignment_tc_id/submissions/:submission_tc_id/originality_report/:or_tc_id',
          action: :update, as: :originality_update
+    post 'originality_report',
+        action: :show, as: :originality_report_show
   end
 
   namespace :event do

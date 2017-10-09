@@ -57,7 +57,7 @@ RSpec.describe ToolProxy, type: :model do
       end
 
       it "includes 'resource_handler' with a valid 'message'" do
-        expected_keys = %w(message_type path enabled_capability)
+        expected_keys = %w(message_type path enabled_capability parameter)
         message_keys = tool_profile['resource_handler'].first['message'].first.keys
         expect(message_keys).to match_array(expected_keys)
       end

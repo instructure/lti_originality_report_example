@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <h1>Originality Report Show</h1>
+    <table>
+      <thead>
+        <td><strong>Parameter</strong></td>
+        <td><strong>Value</strong></td>
+      </thead>
+      <tbody>
+        <% params.each do |k, v| %>
+          <tr>
+            <td><%= k %></td>
+            <td><%= v %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

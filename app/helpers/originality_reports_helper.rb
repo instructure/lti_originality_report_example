@@ -26,7 +26,9 @@ module OriginalityReportsHelper
       # We just grab the last attachment for demo purposes
       file_id: submission.attachments&.last&.fetch('id'),
       originality_score: score,
-      workflow_state: workflow_state
+      workflow_state: workflow_state,
+      tool_setting: { resource_type_code: 'originality_reports' }
+      # tool_setting: { resource_type_code: 'originality_reports', resource_url:'http://originality.docker/test' }
     }
   end
 
@@ -37,6 +39,7 @@ module OriginalityReportsHelper
   # tool consumer profile during registration
   # and saved.
   def originality_report_edit_url
+    # originality_report_creation_url
     "#{originality_report_creation_url}/#{params['or_tc_id']}"
   end
 

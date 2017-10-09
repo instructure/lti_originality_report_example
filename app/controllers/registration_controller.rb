@@ -5,8 +5,11 @@
 # registration please see
 # https://github.com/instructure/lti2_reference_tool_provider
 class RegistrationController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :register
   include RegistrationHelper
+  include LtiHelper
+
+  skip_before_action :verify_authenticity_token, only: :register
+  before_action :allow_iframe
 
   # register
   #
@@ -15,9 +18,6 @@ class RegistrationController < ApplicationController
   # from Canvas, and registers a tool proxy
   def register
     tcp = tool_proxy_registration_service.tool_consumer_profile
-
-    logger.debug(tcp.as_json)
-
     unless tcp.supports_capabilities?(*ToolProxy::REQUIRED_CAPABILITIES)
       redirect_to registration_failure_url('Missing required capabilities') and return
     end
@@ -27,8 +27,21 @@ class RegistrationController < ApplicationController
                                authorization_url: authorization_service.endpoint,
                                report_service_url: originality_report_service.endpoint,
                                submission_service_url: submission_service.endpoint)
+    redirect_to registration_failure_url('Error received from tool consumer') unless create_tool_proxy(tool_proxy)
+    @success_url = registration_success_url(tool_proxy.guid)
+  rescue IMS::LTI::Errors::AuthenticationFailedError => e
+    logger.debug("---- registration errors ----\n")
+    logger.debug(e.assertion)
+    logger.debug(e.grant_type)
+    logger.debug("-----------------------------\n")
+    raise e
+  end
 
-    redirect_to registration_success_url(tool_proxy.guid) and return if create_tool_proxy(tool_proxy)
-    redirect_to registration_failure_url('Error received from tool consumer') and return
+  def tool_product_profile
+    raw_profile = JSON::JWT.new(
+      sub: ENV['CANVAS_DEV_KEY'],
+      'com.instructure.canvas' => { registration_url: registration_url }
+    )
+    @product_profile = raw_profile.sign(ENV['CANVAS_DEV_SECRET'], :HS256).to_s
   end
 end

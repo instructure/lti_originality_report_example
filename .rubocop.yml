@@ -69,7 +69,7 @@ Metrics/MethodLength:
   Max: 25
 
 Metrics/ClassLength:
-  Max: 135
+  Max: 140
 
 Metrics/BlockLength:
   Exclude:

@@ -1,5 +1,7 @@
 class OriginalityReportsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: %i(create update)
+  skip_before_filter :verify_authenticity_token, only: %i(create update show)
+  after_action :allow_iframe, only: :show
+  include LtiHelper
   include OriginalityReportsHelper
 
   # create
@@ -35,7 +37,12 @@ class OriginalityReportsController < ApplicationController
       head :not_found and return
     end
 
-    response = HTTParty.put(originality_report_edit_url,
+    puts 'updating'
+    puts originality_report_edit_url
+    puts({ originality_report: originality_report_json(score: params['originality_score']) }.to_json)
+    puts '/updating'
+
+    response = HTTParty.post(originality_report_edit_url,
                             body: { originality_report: originality_report_json(score: params['originality_score']) },
                             headers: authorization_header)
 
@@ -45,4 +52,6 @@ class OriginalityReportsController < ApplicationController
 
     render json: response.body, status: response.code
   end
+
+  def show; end
 end
