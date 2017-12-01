@@ -11,8 +11,8 @@ A reference tool demonstrating the basic usage of the Canvas plagiarism detectio
 ## Setup
 ```
 docker-compose up --build
-docker-compose exec web rails db:reset
-docker-compose exec web rails db:migrate
+docker-compose run web rails db:reset
+docker-compose run web rails db:migrate
 ```
 For local developement a `.env` file should be created at the root directory of the repository and look like this:
 ```
