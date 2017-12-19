@@ -13,7 +13,7 @@ RSpec.describe AssignmentsController, type: :controller do
 
   describe '#configure' do
     it 'creates an assignment if one is not found' do
-      controller.class.skip_before_filter :lti_authentication
+      controller.class.skip_before_action :lti_authentication
       post :configure, params: params
       expect(Assignment.find_by(lti_assignment_id: rand_id)).not_to be_nil
     end

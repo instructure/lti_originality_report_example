@@ -17,50 +17,50 @@ ActiveRecord::Schema.define(version: 20170424144902) do
   enable_extension "hstore"
 
   create_table "assignments", force: :cascade do |t|
-    t.string   "lti_assignment_id", null: false
-    t.integer  "tool_proxy_id",     null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.hstore   "settings"
-    t.integer  "tc_id"
-    t.index ["lti_assignment_id"], name: "index_assignments_on_lti_assignment_id", using: :btree
-    t.index ["tc_id"], name: "index_assignments_on_tc_id", using: :btree
-    t.index ["tool_proxy_id"], name: "index_assignments_on_tool_proxy_id", using: :btree
+    t.string "lti_assignment_id", null: false
+    t.integer "tool_proxy_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.hstore "settings"
+    t.integer "tc_id"
+    t.index ["lti_assignment_id"], name: "index_assignments_on_lti_assignment_id"
+    t.index ["tc_id"], name: "index_assignments_on_tc_id"
+    t.index ["tool_proxy_id"], name: "index_assignments_on_tool_proxy_id"
   end
 
   create_table "originality_reports", force: :cascade do |t|
-    t.bigint   "tc_id",                      null: false
-    t.integer  "file_id",                    null: false
-    t.float    "originality_score"
-    t.integer  "submission_id",              null: false
-    t.integer  "originality_report_file_id"
-    t.string   "originality_report_url"
-    t.string   "originality_report_lti_url"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["submission_id"], name: "index_originality_reports_on_submission_id", using: :btree
-    t.index ["tc_id"], name: "index_originality_reports_on_tc_id", using: :btree
+    t.bigint "tc_id", null: false
+    t.integer "file_id", null: false
+    t.float "originality_score"
+    t.integer "submission_id", null: false
+    t.integer "originality_report_file_id"
+    t.string "originality_report_url"
+    t.string "originality_report_lti_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["submission_id"], name: "index_originality_reports_on_submission_id"
+    t.index ["tc_id"], name: "index_originality_reports_on_tc_id"
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.bigint   "tc_id",         null: false
-    t.integer  "assignment_id", null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.text     "attachments"
-    t.index ["assignment_id"], name: "index_submissions_on_assignment_id", using: :btree
-    t.index ["tc_id"], name: "index_submissions_on_tc_id", using: :btree
+    t.bigint "tc_id", null: false
+    t.integer "assignment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "attachments"
+    t.index ["assignment_id"], name: "index_submissions_on_assignment_id"
+    t.index ["tc_id"], name: "index_submissions_on_tc_id"
   end
 
   create_table "tool_proxies", force: :cascade do |t|
-    t.string "guid",                   null: false
-    t.string "shared_secret",          null: false
-    t.string "tcp_url",                null: false
-    t.string "base_url",               null: false
+    t.string "guid", null: false
+    t.string "shared_secret", null: false
+    t.string "tcp_url", null: false
+    t.string "base_url", null: false
     t.string "authorization_url"
     t.string "report_service_url"
     t.string "submission_service_url"
-    t.index ["guid"], name: "index_tool_proxies_on_guid", using: :btree
+    t.index ["guid"], name: "index_tool_proxies_on_guid"
   end
 
   add_foreign_key "assignments", "tool_proxies"

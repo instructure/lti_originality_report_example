@@ -1,5 +1,5 @@
 class OriginalityReportsController < ApplicationController
-  skip_before_filter :verify_authenticity_token, only: %i(create update)
+  skip_before_action :verify_authenticity_token, only: %i(create update)
   include OriginalityReportsHelper
 
   # create
