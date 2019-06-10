@@ -1,4 +1,5 @@
-FROM ruby:2.4.1
+FROM instructure/ruby:2.4-xenial
+USER root
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
       build-essential nodejs libpq-dev
 ENV APP_HOME='/usr/src/app' RAILS_LOG_TO_STDOUT='true' REDIS_CACHE='true'
