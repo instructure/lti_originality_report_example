@@ -31,17 +31,13 @@ class OriginalityReportsController < ApplicationController
   #
   # Updates an originality report in Canvas and the tool.
   def update
-    if submission.blank? || assignment.blank? || originality_report.blank?
-      head :not_found and return
-    end
+    head :not_found and return if submission.blank? || assignment.blank? || originality_report.blank?
 
     response = HTTParty.put(originality_report_edit_url,
                             body: { originality_report: originality_report_json(score: params['originality_score']) },
                             headers: authorization_header)
 
-    if response.code == 200
-      originality_report.update_attributes(originality_score: JSON.parse(response.body)['originality_score'])
-    end
+    originality_report.update_attributes(originality_score: JSON.parse(response.body)['originality_score']) if response.code == 200
 
     render json: response.body, status: response.code
   end

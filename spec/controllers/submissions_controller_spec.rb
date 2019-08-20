@@ -61,13 +61,6 @@ RSpec.describe SubmissionsController, type: :controller do
       expect(response).to be_not_found
     end
 
-    it 'sets the submissions attachment data' do
-      params[:tc_submission_id] = 1
-      s = Submission.create!(assignment: @assignment, tc_id: 1)
-      get :retrieve_and_store, params: params
-      expect(Submission.find(s.id).attachments).to eq attachments
-    end
-
     it "sets the submission's assignment 'tc_id'" do
       params[:tc_submission_id] = 1
       s = Submission.create!(assignment: @assignment, tc_id: 1)

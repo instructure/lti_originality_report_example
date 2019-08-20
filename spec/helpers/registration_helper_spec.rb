@@ -76,7 +76,7 @@ RSpec.describe RegistrationHelper, type: :helper do
 
     it 'sets the lti_errormsg' do
       url = URI.parse(helper.registration_failure_url('this is a message'))
-      expect(url.query).to include "lti_errormsg=#{URI.encode('this is a message')}"
+      expect(url.query).to include 'lti_errormsg=this%20is%20a%20message'
     end
   end
 end

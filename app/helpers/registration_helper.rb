@@ -109,6 +109,6 @@ module RegistrationHelper
   # returns the url to redirect to if registering the
   # tool proxy fails
   def registration_failure_url(message)
-    "#{registration_request.launch_presentation_return_url}?status=failure&lti_errormsg=#{URI.encode(message)}"
+    "#{registration_request.launch_presentation_return_url}?status=failure&lti_errormsg=#{ERB::Util.url_encode(message)}"
   end
 end
