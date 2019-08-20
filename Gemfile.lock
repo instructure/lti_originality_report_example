@@ -92,6 +92,7 @@ GEM
       activesupport
       aes_key_wrap
       bindata
+    libv8 (7.3.492.27.1-x86_64-linux)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -103,6 +104,8 @@ GEM
     method_source (0.9.0)
     mini_mime (1.0.0)
     mini_portile2 (2.4.0)
+    mini_racer (0.2.6)
+      libv8 (>= 6.9.411)
     minitest (5.11.3)
     multi_json (1.12.2)
     multi_xml (0.6.0)
@@ -260,6 +263,7 @@ DEPENDENCIES
   jquery-rails
   json-jwt
   listen (~> 3.0.5)
+  mini_racer (~> 0.2.6)
   pg (~> 0.18)
   puma (~> 3.0)
   rack-mini-profiler (~> 0.10)
@@ -282,4 +286,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.14.6
+   1.15.4
