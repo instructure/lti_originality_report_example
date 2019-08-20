@@ -12,7 +12,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'bootstrap', '~> 4.3.1'
 gem 'httparty'
 gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_security'
 gem 'jbuilder', '~> 2.5'
