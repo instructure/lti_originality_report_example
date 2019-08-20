@@ -60,11 +60,6 @@ class ToolProxy < ActiveRecord::Base
       tool_service: [
         IMS::LTI::Models::RestServiceProfile.new(
           type: 'RestServiceProfile',
-          service: 'vnd.Canvas.webhooksSubscription',
-          action: %w(POST GET PUT DELETE)
-        ),
-        IMS::LTI::Models::RestServiceProfile.new(
-          type: 'RestServiceProfile',
           service: 'vnd.Canvas.submission',
           action: %w(GET)
         ),
