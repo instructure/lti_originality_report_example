@@ -36,9 +36,25 @@ Lti::ToolConsumerProfile.create!(
 5. Paste in the tools registration URL (found on the tool's home page) to install the tool in Canvas.
 
 > Note: Creating the .env file didn't seem to work in some instances.  Until the bug is fixed, you may need to manually set the secret/key directly in the Ruby code (currently, registration_helper.rb:30-31)
+> You may also disable Canvas from trying to send to the Subscription service.  You can do this by editing `app/models/assignment_configuration_tool_lookup.rb`
+
+```ruby
+# assignment_configuration_tool_lookup.rb: 97 (comment out line)
+ 
+# Lti::AssignmentSubscriptionsHelper.new(tool_proxy).destroy_subscription(subscription_id)
+```
+
+```ruby
+# assignment_configuration_tool_lookup.rb: 117 (change line)
+
+self.update_attributes(subscription_id: SecureRandom.uuid)
+```
+
 
 ## Usage
-1. When creating an assignment in Canvas, and associating it with the tool, a record in the tool's data is created.  We need to associate the assignment in canvas with the one in the tool, then create a submission.  We can do that using the following commands:
+1. When creating an assignment in Canvas and associating it with this tool, an assignment record in the tool's data is also created.  
+Because the canvas assignment did not have an id when initially created, we need to create that association if the tool's record has a null value for tc_id.
+We can do that using the following commands:
 
 ```ruby
 a = Assignment.last
