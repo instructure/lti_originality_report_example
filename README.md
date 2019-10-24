@@ -34,3 +34,39 @@ Lti::ToolConsumerProfile.create!(
 ```
 4. Navigate to a Canvas course or account and go to settings > +App and Change the configuration type to "By LTI 2 Registration URL."
 5. Paste in the tools registration URL (found on the tool's home page) to install the tool in Canvas.
+
+> Note: Creating the .env file didn't seem to work in some instances.  Until the bug is fixed, you may need to manually set the secret/key directly in the Ruby code (currently, registration_helper.rb:30-31)
+> You may also disable Canvas from trying to send to the Subscription service.  You can do this by editing `app/models/assignment_configuration_tool_lookup.rb`
+
+```ruby
+# assignment_configuration_tool_lookup.rb: 97 (comment out line)
+ 
+# Lti::AssignmentSubscriptionsHelper.new(tool_proxy).destroy_subscription(subscription_id)
+```
+
+```ruby
+# assignment_configuration_tool_lookup.rb: 117 (change line)
+
+self.update_attributes(subscription_id: SecureRandom.uuid)
+```
+
+
+## Usage
+1. When creating an assignment in Canvas and associating it with this tool, an assignment record in the tool's data is also created.  
+Because the canvas assignment did not have an id when initially created, we need to create that association if the tool's record has a null value for tc_id.
+We can do that using the following commands:
+
+```ruby
+a = Assignment.last
+a[:tc_id] = 12 # get from Canvas data
+a.save
+```
+
+2. Create a submission in Canvas and find its id.  Then back in the rails console:
+```ruby
+a.submissions.create(tc_id: 7)
+```
+
+3. Launch the tool from tool from Course Navigation menu in Canvas
+4. The submission should show, click the button in the last column
+5. Set the score and click "Update Report"
