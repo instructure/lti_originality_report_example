@@ -92,7 +92,7 @@ GEM
       activesupport
       aes_key_wrap
       bindata
-    libv8 (7.3.492.27.1-x86_64-linux)
+    libv8 (7.3.492.27.1)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -248,7 +248,7 @@ GEM
       railties (>= 5.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.3)
+    websocket-extensions (0.1.5)
 
 PLATFORMS
   ruby
