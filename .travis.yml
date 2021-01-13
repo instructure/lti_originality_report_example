@@ -1,18 +1,20 @@
-version:
+version: ~> 1.0
 os: linux
 dist: bionic
 virt: lxd
 language: ruby
+rvm:
+  - 2.4.1
 services:
   - docker
 env:
   - COMPOSE_FILE=./docker-compose.yml
 
-before_install:
+install:
   - docker-compose build --pull
-  - docker-compose up -d
 
 before_script:
+  - docker-compose up -d
   - docker-compose exec -T web RACK_ENV=test bundle exec rake db:create
 script:
   - docker-compose exec -T web RACK_ENV=test bundle exec rake db:migrate
