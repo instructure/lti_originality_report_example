@@ -24,8 +24,6 @@ services:
       - '3000:3000'
     volumes:
       - '.:/usr/src/app'
-    env_file:
-      - '.env'
     environment:
       VIRTUAL_HOST: .originality.docker
       DATABASE_URL: postgres://postgres:postgres@postgres/sdrt?
