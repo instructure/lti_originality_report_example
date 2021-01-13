@@ -11,15 +11,15 @@ env:
   - COMPOSE_FILE=./docker-compose.yml
 
 install:
-  - docker-compose build --pull
+  - docker-compose build --pull -q
 
 before_script:
   - docker-compose up -d
-  - docker-compose exec -T web RACK_ENV=test bundle exec rake db:create
+  - docker-compose exec -T -e RACK_ENV=test web bundle exec rake db:create
 script:
-  - docker-compose exec -T web RACK_ENV=test bundle exec rake db:migrate
+  - docker-compose exec -T -e RACK_ENV=test web bundle exec rake db:migrate
   - docker-compose exec -T web bundle exec rake rubocop
-  - docker-compose exec -T bundle exec rake
+  - docker-compose exec -T web bundle exec rake
 after_script:
   # Cleanup docker-compose stuff.
   - docker-compose down --remove-orphans --rmi all
