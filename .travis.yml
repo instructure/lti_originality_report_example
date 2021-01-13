@@ -1,16 +1,23 @@
-sudo: required
+version:
+os: linux
+dist: bionic
+virt: lxd
 language: ruby
 services:
   - docker
-rvm:
-  - 2.4.1
+env:
+  - COMPOSE_FILE=./docker-compose.yml
 
 before_install:
-  - docker build -t instructure/lti_originality_report_example .
+  - docker-compose build --pull
+  - docker-compose up -d
 
 before_script:
-  - RACK_ENV=test bundle exec rake db:create
+  - docker-compose exec -T web RACK_ENV=test bundle exec rake db:create
 script:
-  - RACK_ENV=test bundle exec rake db:migrate
-  - bundle exec rake rubocop
-  - bundle exec rake
+  - docker-compose exec -T web RACK_ENV=test bundle exec rake db:migrate
+  - docker-compose exec -T web bundle exec rake rubocop
+  - docker-compose exec -T bundle exec rake
+after_script:
+  # Cleanup docker-compose stuff.
+  - docker-compose down --remove-orphans --rmi all
