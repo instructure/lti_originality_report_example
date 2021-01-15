@@ -15,6 +15,8 @@ install:
 
 before_script:
   - docker-compose up -d
+  - docker-compose exec -T web ./script/wait-for-it/wait-for-it.sh postgres:5432
+  - docker-compose exec -T web ./script/wait-for-it/wait-for-it.sh redis:6379
   - docker-compose exec -T -e RACK_ENV=test web bundle exec rake db:create
 script:
   - docker-compose exec -T -e RACK_ENV=test web bundle exec rake db:migrate
