@@ -36,6 +36,22 @@ class SubmissionsController < ApplicationController
     render json: submission, status: :ok
   end
 
+  # get_submission
+
+  # Given a tool consumer submission id, determines if the tool has an existing
+  # submission record in its database, and returns it if it does. Otherwise 
+  # returns Not Found. 
+
+  # params[:tc_submission_id] - The tool consumer id to use when searching. In Canvas 
+  # terms, a tool consumer submission id is equivalent to a Canvas Submission's
+  # global_id.
+  #
+
+  def get_submission
+    submission = Submission.find_by!(tc_id: params[:tc_submission_id])
+    render json: submission, status: :ok
+  end
+
   # index
   #
   # presents a list of submissions received via webhook

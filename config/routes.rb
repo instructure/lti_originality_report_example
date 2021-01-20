@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
   scope(controller: :assignments) do
+    get 'assignments/by_lti_id/:lti_assignment_id', action: :get_assignment
     post 'assignments/configure', action: :configure, as: :assignment_configuration
     post 'assignments/:lti_assignment_id/update', action: :update, as: :assignment_update
   end
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   scope(controller: :submissions) do
     get 'tool_proxy/:tool_proxy_guid/submissions/:tc_submission_id/retrieve',
         action: :retrieve_and_store, as: :submission_retrival
+    get 'submission/by_tc_id/:tc_submission_id', action: :get_submission
     post 'submission/index', action: :index
   end
 
