@@ -25,7 +25,7 @@ class AssignmentsController < ApplicationController
   # Canvas terms, this is equivalent to an Assignment's lti_context_id.
   #
 
-  def get_assignment
+  def show_by_lti_id
     assignment = Assignment.find_by!(lti_assignment_id: params[:lti_assignment_id])
     render json: assignment, status: :ok
   end
