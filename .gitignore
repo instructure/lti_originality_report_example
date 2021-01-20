@@ -26,3 +26,6 @@
 
 /spec/examples.txt
 /config/canvas_creds.yml
+
+# Ignore docker-compose override files.
+docker-compose.override.yml
