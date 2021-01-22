@@ -6,11 +6,9 @@ class ToolProxyController < ApplicationController
   # id.
   #
   # proxy_id - The id of the proxy to be found.
-  def obtain_guid_by_id
-    tp = ToolProxy.find(params[:proxy_id])
-  rescue ActiveRecord::RecordNotFound
-    head :not_found and return
-  else
+  def show_guid_by_id
+    tp = ToolProxy.where(id: params[:proxy_id]).first
+    head :not_found and return unless tp.present?
     render json: tp.guid, status: :ok
   end
 
@@ -20,7 +18,7 @@ class ToolProxyController < ApplicationController
   # assignment.
   #
   #
-  def obtain_guid_by_assignment_tc_id
+  def show_guid_by_assignment_tc_id
     tp = tool_proxy_from_assignment
     head :not_found and return unless tp.present?
     render json: tp.guid, status: :ok

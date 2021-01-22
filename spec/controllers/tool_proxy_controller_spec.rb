@@ -6,27 +6,28 @@ RSpec.describe ToolProxyController, type: :controller do
   let(:lti_assignment_id) { SecureRandom.uuid }
   let(:assignment) { tool_proxy.assignments.create!(lti_assignment_id: lti_assignment_id, tc_id: SecureRandom.random_number) }
 
-  describe 'GET #obtain_guid_by_id' do
+  describe 'GET #show_guid_by_id' do
     it 'returns the guid for a valid proxy id' do
-      get :obtain_guid_by_id, params: { proxy_id: tool_proxy.id }
+      get :show_guid_by_id, params: { proxy_id: tool_proxy.id }
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq(tool_proxy.guid)
     end
 
     it 'returns a 404 for an invalid proxy id' do
-      get :obtain_guid_by_id, params: { proxy_id: 55_041 }
+      get :show_guid_by_id, params: { proxy_id: 55_041 }
       expect(response).to have_http_status(:not_found)
     end
   end
 
-  describe 'GET #obtain_guid_by_assignment_tc_id' do
+  describe 'GET #show_guid_by_assignment_tc_id' do
     it 'returns the correct proxy guid for a valid assignment tool consumer id' do
-      get :obtain_guid_by_assignment_tc_id, params: { assignment_tc_id: assignment.tc_id }
+      get :show_guid_by_assignment_tc_id, params: { assignment_tc_id: assignment.tc_id }
       expect(response.body).to eq(tool_proxy.guid)
     end
 
     it 'returns a 404 for an invalid assignment tool consumer id' do
-      get :obtain_guid_by_assignment_tc_id, params: { assignment_tc_id: 5_050_457 }
+      get :show_guid_by_assignment_tc_id, params: { assignment_tc_id: assignment.tc_id + 1 }
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

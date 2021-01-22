@@ -11,8 +11,8 @@ Rails.application.routes.draw do
   end
 
   scope(controller: :tool_proxy) do
-    get 'tool_proxy/obtain_guid/:proxy_id', action: :obtain_guid_by_id
-    get 'tool_proxy/obtain_guid/assignment/:assignment_tc_id', action: :obtain_guid_by_assignment_tc_id
+    get 'tool_proxy/obtain_guid/:proxy_id', action: :show_guid_by_id
+    get 'tool_proxy/obtain_guid/assignment/:assignment_tc_id', action: :show_guid_by_assignment_tc_id
   end
 
   scope(controller: :submissions) do
