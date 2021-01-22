@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   scope(controller: :submissions) do
     get 'tool_proxy/:tool_proxy_guid/submissions/:tc_submission_id/retrieve',
         action: :retrieve_and_store, as: :submission_retrival
-    get 'submission/by_tc_id/:tc_submission_id', action: :show_by_lti_id
+    get 'submission/by_tc_id/:tc_submission_id', action: :show_by_tc_id
     post 'submission/index', action: :index
   end
 

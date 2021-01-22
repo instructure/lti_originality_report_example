@@ -48,7 +48,8 @@ class SubmissionsController < ApplicationController
   #
 
   def show_by_tc_id
-    submission = Submission.find_by!(tc_id: params[:tc_submission_id])
+    submission = Submission.find_by(tc_id: params[:tc_submission_id])
+    head :not_found and return unless submission.present?
     render json: submission, status: :ok
   end
 

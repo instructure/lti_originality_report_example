@@ -26,7 +26,8 @@ class AssignmentsController < ApplicationController
   #
 
   def show_by_lti_id
-    assignment = Assignment.find_by!(lti_assignment_id: params[:lti_assignment_id])
+    assignment = Assignment.find_by(lti_assignment_id: params[:lti_assignment_id])
+    head :not_found and return unless assignment.present?
     render json: assignment, status: :ok
   end
 

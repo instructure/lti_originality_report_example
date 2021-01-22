@@ -14,6 +14,25 @@ RSpec.describe SubmissionsController, type: :controller do
     }
   end
 
+  describe '#show_by_tc_id' do
+    it 'returns the correct submission' do
+      puts "This is the submission_tc_id that should be a uuid #{submission_tc_id}"
+      params = { tc_submission_id: submission_tc_id }
+      get :show_by_tc_id, params: params
+      expect(response).to have_http_status(:ok)
+
+      puts "This is the response body for the success test #{response.body}"
+      actual = JSON.parse!(response.body, symbolize_names: true)
+      expect(actual[:tc_id]).to eq(submission.tc_id)
+    end
+
+    it 'returns a Not Found for a nonexistent submission' do
+      params = { tc_submission_id: Submission.last.tc_id + 1 }
+      get :show_by_tc_id, params: params
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   describe '#index' do
     it 'renders the submissions' do
       controller.class.skip_before_action :lti_authentication
