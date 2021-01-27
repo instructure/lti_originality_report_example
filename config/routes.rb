@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     post 'assignments/:lti_assignment_id/update', action: :update, as: :assignment_update
   end
 
+  scope(controller: :tool_proxy) do
+    get 'tool_proxy/obtain_guid/:proxy_id', action: :show_guid_by_id
+    get 'tool_proxy/obtain_guid/assignment/:assignment_tc_id', action: :show_guid_by_assignment_tc_id
+  end
+
   scope(controller: :submissions) do
     get 'tool_proxy/:tool_proxy_guid/submissions/:tc_submission_id/retrieve',
         action: :retrieve_and_store, as: :submission_retrival
