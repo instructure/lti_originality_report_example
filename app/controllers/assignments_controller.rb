@@ -15,6 +15,22 @@ class AssignmentsController < ApplicationController
     @settings = assignment.settings
   end
 
+  # get_assignment
+
+  # Given an lti_assignment_id, finds an assignment with a matching
+  # lti_assignment_id and returns it. If no assignment is found, a
+  # 404 Not Found is returned.
+  #
+  # params[:lti_assignment_id] - The lti_assignment_id to search with. In
+  # Canvas terms, this is equivalent to an Assignment's lti_context_id.
+  #
+
+  def show_by_lti_id
+    assignment = Assignment.find_by(lti_assignment_id: params[:lti_assignment_id])
+    head :not_found and return unless assignment.present?
+    render json: assignment, status: :ok
+  end
+
   # update
   #
   # Handles settings changes that happen asynchronously as

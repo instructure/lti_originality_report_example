@@ -11,6 +11,25 @@ RSpec.describe AssignmentsController, type: :controller do
     }
   end
 
+  describe '#show_by_lti_id' do
+    let!(:assignment) { tool_proxy.assignments.create!(lti_assignment_id: rand_id) }
+    let(:params) { { lti_assignment_id: rand_id } }
+
+    it 'returns the correct assignment if it exists' do
+      get :show_by_lti_id, params: params
+      expect(response).to have_http_status(:ok)
+
+      actual = JSON.parse!(response.body, symbolize_names: true)
+      expect(actual[:lti_assignment_id]).to eq(assignment.lti_assignment_id)
+    end
+
+    it 'returns a Not Found if no assignment matches' do
+      params = { lti_assignment_id: SecureRandom.uuid }
+      get :show_by_lti_id, params: params
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   describe '#configure' do
     it 'creates an assignment if one is not found' do
       controller.class.skip_before_action :lti_authentication
