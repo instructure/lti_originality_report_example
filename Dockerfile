@@ -1,4 +1,4 @@
-FROM ruby:2.4.1
+FROM ruby:2.6
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
       build-essential nodejs libpq-dev
 ENV APP_HOME='/usr/src/app' RAILS_LOG_TO_STDOUT='true' REDIS_CACHE='true'
