@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '2.6.8'
+ruby '2.7.7'
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -18,7 +18,7 @@ gem 'ims-lti', git: 'https://github.com/instructure/ims-lti.git', branch: 'ws_se
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
 gem 'json-jwt'
-gem 'mini_racer', '~> 0.2.6'
+gem 'mini_racer', '~> 0.6.3'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 gem 'rack-timeout', '~> 0.4'
