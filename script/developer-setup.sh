@@ -1,5 +1,7 @@
 #!/bin/sh
 
+touch .env
+
 # Sets up the project for development using Docker and docker-compose.
 
 # Use the example override file.

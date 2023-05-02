@@ -27,7 +27,7 @@ docker-compose run web rails db:migrate
 
 ## Installing in Canvas
 
-1. Create a developer key in Canvas. The "Vendor code" should be set to `Instructure.com`
+1. Create a developer key in Canvas. The "Vendor code" should be set to `Instructure.com`. The "Redirect URIs" can be set to any valid URI, this property not used in the context of the plagiarism platform. The key should be unscoped.
 2. Create a .env file in the lti_originality_report_example project with the following lines:
 
 ```
